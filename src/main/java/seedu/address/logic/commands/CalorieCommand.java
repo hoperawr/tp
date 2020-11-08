@@ -134,7 +134,6 @@ public class CalorieCommand extends Command {
             if (!isOut) {
                 editDay.getCalorieManager().addCalorieInput((Input) calorie);
             } else {
-                System.out.println("hello");
                 editDay.getCalorieManager().addCalorieOutput((Output) calorie);
             }
             model.setDay(model.getDay(date), editDay);

@@ -1,0 +1,92 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MyFitnessBuddyParser" as MyFitnessBuddyParser LOGIC_COLOR
+participant ":CalorieCommandParser" as CalorieCommandParser LOGIC_COLOR
+participant "d:CalorieCommand" as CalorieCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:ModelManager" as ModelManager MODEL_COLOR
+participant "p:Person" as Person MODEL_COLOR
+participant "d:Day" as Day MODEL_COLOR
+participant "c:CalorieManager" as CalorieManager MODEL_COLOR
+end box
+
+[-> LogicManager : execute("calorie tp/out t/1230 e/Run c/123")
+activate LogicManager
+
+LogicManager -> MyFitnessBuddyParser : parseCommand("calorie tp/out t/1230 e/Run c/123")
+activate MyFitnessBuddyParser
+
+create CalorieCommandParser
+MyFitnessBuddyParser -> CalorieCommandParser
+activate CalorieCommandParser
+
+CalorieCommandParser --> MyFitnessBuddyParser
+deactivate CalorieCommandParser
+
+MyFitnessBuddyParser -> CalorieCommandParser : parse("t/1230 e/Run c/123")
+activate CalorieCommandParser
+
+create CalorieCommand
+CalorieCommandParser -> CalorieCommand
+activate CalorieCommand
+
+CalorieCommand --> CalorieCommandParser : c
+deactivate CalorieCommand
+
+CalorieCommandParser --> MyFitnessBuddyParser : c
+deactivate CalorieCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+CalorieCommandParser -[hidden]-> MyFitnessBuddyParser
+destroy CalorieCommandParser
+
+MyFitnessBuddyParser --> LogicManager : c
+deactivate MyFitnessBuddyParser
+
+LogicManager -> CalorieCommand : execute()
+activate CalorieCommand
+
+
+CalorieCommand -> ModelManager : getDay()
+activate ModelManager
+
+ModelManager -> Person : getDay()
+activate Person
+
+Person -> Day : getCalorieManager()
+activate Day
+
+Day -> CalorieManager : add()
+activate CalorieManager
+
+CalorieManager --> Day
+deactivate CalorieManager
+
+Day --> Person
+deactivate Day
+
+Person --> ModelManager
+
+deactivate Person
+
+ModelManager --> CalorieCommand
+deactivate ModelManager
+
+create CommandResult
+CalorieCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> CalorieCommand
+deactivate CommandResult
+
+CalorieCommand --> LogicManager : result
+deactivate CalorieCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

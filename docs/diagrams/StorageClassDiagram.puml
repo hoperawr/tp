@@ -1,24 +1,29 @@
 @startuml
 !include style.puml
+
 skinparam arrowThickness 1.1
 skinparam arrowColor STORAGE_COLOR
 skinparam classBackgroundColor STORAGE_COLOR
 
 Interface Storage <<Interface>>
 Interface UserPrefsStorage <<Interface>>
-Interface AddressBookStorage <<Interface>>
+Interface MyFitnessBuddyStorage <<Interface>>
 
 Class StorageManager
 Class JsonUserPrefsStorage
-Class JsonAddressBookStorage
+Class JsonMyFitnessBuddyStorage
 
 StorageManager .left.|> Storage
 StorageManager o-right-> UserPrefsStorage
-StorageManager o--> AddressBookStorage
+StorageManager o--> MyFitnessBuddyStorage
 
 JsonUserPrefsStorage .left.|> UserPrefsStorage
-JsonAddressBookStorage .left.|> AddressBookStorage
-JsonAddressBookStorage .down.> JsonSerializableAddressBookStorage
-JsonSerializableAddressBookStorage .right.> JsonSerializablePerson
-JsonSerializablePerson .right.> JsonAdaptedTag
+JsonMyFitnessBuddyStorage .left.|> MyFitnessBuddyStorage
+JsonMyFitnessBuddyStorage .down.> JsonSerializableMyFitnessBuddyStorage
+JsonSerializableMyFitnessBuddyStorage .right.> JsonAdaptedPerson
+JsonAdaptedPerson .up.> JsonAdaptedProfile
+JsonAdaptedPerson .right.> JsonAdaptedDay
+JsonAdaptedDay .down.> JsonAdaptedCalorieManager
+JsonAdaptedCalorieManager .left.> JsonAdaptedInput
+JsonAdaptedCalorieManager .down.> JsonAdaptedOutput
 @enduml

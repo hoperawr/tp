@@ -1,0 +1,89 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant "d:CalorieCommand" as CalorieCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:ModelManager" as ModelManager MODEL_COLOR
+participant "f:MyFitnessBuddy" as MyFitnessBuddy MODEL_COLOR
+participant "p:Person" as Person MODEL_COLOR
+participant "u:UniqueDayList" as UniqueDayList MODEL_COLOR
+participant "d:Day" as Day MODEL_COLOR
+participant "c:CalorieManager" as CalorieManager MODEL_COLOR
+end box
+
+
+[-> CalorieCommand : execute()
+activate CalorieCommand
+
+
+CalorieCommand -> ModelManager : getDay(date)
+activate ModelManager
+
+ModelManager -> MyFitnessBuddy : getDay(date)
+activate MyFitnessBuddy
+
+MyFitnessBuddy -> Person : getDay(date)
+activate Person
+
+Person -> UniqueDayList : getDate(date)
+activate UniqueDayList
+
+UniqueDayList --> Person
+Person --> MyFitnessBuddy
+MyFitnessBuddy --> ModelManager
+ModelManager --> CalorieCommand
+
+CalorieCommand -> Day : getCalorieManager()
+activate Day
+
+alt !isOut
+Day-> CalorieManager : addCalorieInput(calorie)
+activate CalorieManager
+CalorieManager --> Day
+deactivate CalorieManager
+
+else else
+Day->CalorieManager : addCalorieOutput(calorie)
+activate CalorieManager
+CalorieManager --> Day
+deactivate CalorieManager
+end
+
+deactivate CalorieManager
+
+Day --> Person
+deactivate Day
+
+Person --> ModelManager
+
+ModelManager --> CalorieCommand
+CalorieCommand -> ModelManager : setDay(target, editedDay)
+ModelManager -> MyFitnessBuddy : setDay(target, editedDay)
+MyFitnessBuddy -> Person : setDay(target, editedDay)
+Person -> UniqueDayList : setDay(target, editedDay)
+
+UniqueDayList --> Person
+deactivate UniqueDayList
+Person --> MyFitnessBuddy
+deactivate Person
+MyFitnessBuddy --> ModelManager
+deactivate MyFitnessBuddy
+ModelManager --> CalorieCommand
+
+deactivate ModelManager
+
+create CommandResult
+CalorieCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> CalorieCommand
+deactivate CommandResult
+
+[<--CalorieCommand
+deactivate CalorieCommand
+
+@enduml

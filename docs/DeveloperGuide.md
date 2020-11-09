@@ -94,12 +94,14 @@ The overall UI structure is decomposed from `MainWindow` into different class di
     * `ProfileListPanel`
     * `ProfileCard`
     
+
 ![Ui_Class_Diagram4](images/UiClassDiagram4.png)
 
 * Day Panel:
     * `DayListPanel`
     * `DayCard`
     
+
 ![Ui_Class_Diagram3](images/UiClassDiagram3.png)
 
 * Calorie Panels:
@@ -108,6 +110,7 @@ The overall UI structure is decomposed from `MainWindow` into different class di
     * `CalorieOutputListPanel`
     * `CalorieOutputCard`
     
+
 ![Ui_Class_Diagram5](images/UiClassDiagram5.png)
 
 * Pop-Out Windows:
@@ -116,6 +119,7 @@ The overall UI structure is decomposed from `MainWindow` into different class di
     * `CommanderBmiStatsWindow`
     * `HelpWindow`
     
+
 ![Ui_Class_Diagram6](images/UiClassDiagram6.png)
 
 * Other UI elements:
@@ -124,6 +128,7 @@ The overall UI structure is decomposed from `MainWindow` into different class di
     * `StatusBarDaySelected`
     * `StatusBarFooter`
     
+
 ![Ui_Class_Diagram2](images/UiClassDiagram2.png)
 
 ### 2.3 Logic component
@@ -168,8 +173,6 @@ The `Calorie` class contains a `Time` and `CalorieCount` which `Input` and `Outp
 
 ### 2.5 Storage component
 
-### 2.5 Storage component
-
 ![Structure of the Storage Component](images/StorageClassDiagram.png)
 
 **API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-W11-3/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
@@ -194,6 +197,38 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 ## **3. Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Add Calorie feature
+
+#### Overview
+
+This feature allows users to add a calorie to the calorie manager of the day with the specified date.   
+If no date is specified, calorie command takes the system date and adds it to the day with the date.
+
+This is an activity diagram to demostrate what happens when the user uses the calorie command
+![AddCalorieActivity](images/AddCalorieActivity.png)
+
+#### Implementation
+Step 1: CalorieCommand.execute(model) is called by Logic Manager which gives a Model object as argument.  
+Step 2:  CalorieCommand will first check whether the Model object has a day with the date. If false, it throws an error.  
+Step 3: CalorieCommand will try to get the Day object. First, it calls model.getDay(date), which calls the MyFitnessBuddy object getDay(date) which calls the Person object getDay(date) which finally calls UniqueDayList object getDate(date) and returns a Day object.  
+Step 4: It will then assign the Day object to two Day objects, editDay and targetDay.  
+Step 5: CalorieCommand will then edit the Day by changing the Day object’s CalorieManager object. First, it calls editDay.getCalorieManager() to get the Day object’s CalorieManager object.  
+Step 6: Depending on whether the boolean isOut is true, it adds the appropriate calorie to the CalorieManager object. If isOut is true, it calls addCalorieOutput(calorie), else it calls addCalorieInput(calorie)  
+Step 7: After changing editDay, CalorieCommand will call model.setDay(editDay, targetDay) to replace the targetDay with the edited Day object which contains the new Calorie.  
+
+Sequence diagram when CalorieCommand is executed
+![AddCalorieSequenceDiagram](images/AddCalorieSequenceDiagram.png)
+
+#### Design Considerations
+Alternative 1:  
+Instead of having a single CalorieCommand class, have an OutputCommand and InputCommand class  
+Pros: Less confusing code  
+Cons: Duplicate code as the two commands have very similar functions  
+Alternative 2:  
+Directly editing the CalorieManager of the Day object instead of using setDay()  
+Pros: Less confusing code  
+Cons: More bugs will occur, not defensive coding  
 
 ### Feature: Add a new daily record
 
@@ -463,7 +498,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | user                                       | record meals and the amount of calorie eaten  | keep track of them |
 | `* * *`  | user                                       | record exercises and the amount of calories lost | keep track of them |
 | `* * *`  | user                                       | view my calorie history   | see if I am hitting my calorie targets |
-| `* * *`  | user                                       | view all my daily weights | see if I am hitting my weight targets | 
+| `* * *`  | user                                       | view all my daily weights | see if I am hitting my weight targets |
 | `* * *`  | user                                       | delete a specified calorie output | remove a wrong input |
 |  `* * *` | user                                       | delete a specified calorie input | remove a wrong output |
 
@@ -481,6 +516,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     
     Use case ends.
     
+
 **Use case: Edit a daily weight record**
 
 **MSS**
@@ -500,6 +536,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
     
+
 **Use case: View calorie's of a particular day recorded**
 
 **MSS**
@@ -572,7 +609,7 @@ testers are expected to do more *exploratory* testing.
        
     2. Test case: `create n/John id/1121 h/170 w/80` <br>
        Expected: No profile gets created. Error details shown in the status message. Invalid id number. 
-   
+
 ### Adding a day
 
 1. Adding a day when the current day list is empty
@@ -634,7 +671,7 @@ inputs and ouputs already.
 
    1. Other incorrect delete commands to try: `view`, `view x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
-  
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files

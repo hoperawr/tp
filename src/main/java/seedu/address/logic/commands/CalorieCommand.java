@@ -83,6 +83,7 @@ public class CalorieCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         LocalDate date = getDate(this.date);
+
         if (!model.hasDay(date)) {
             throw new CommandException(NO_AVAILABLE_DAY);
         }

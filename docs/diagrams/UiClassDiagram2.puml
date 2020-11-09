@@ -1,0 +1,32 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+package UI <<Rectangle>>{
+Class "{abstract}\nUiPart" as UiPart
+Class MainWindow
+Class ResultDisplay
+Class StatusBarFooter
+Class CommandBox
+Class StatusBarDaySelected
+}
+MainWindow *-down-> CommandBox
+MainWindow *-down-> ResultDisplay
+MainWindow *-down-> StatusBarFooter
+MainWindow *-down-> StatusBarDaySelected
+
+
+MainWindow --|> UiPart
+ResultDisplay --|> UiPart
+CommandBox ----|> UiPart
+StatusBarFooter --|> UiPart
+StatusBarDaySelected --|> UiPart
+
+StatusBarFooter -[hidden]right- ResultDisplay
+ResultDisplay -[hidden]right- CommandBox
+CommandBox -[hidden]right- StatusBarDaySelected
+
+MainWindow -[hidden]-|> UiPart
+@enduml

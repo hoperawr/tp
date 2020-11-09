@@ -37,7 +37,6 @@ public class ID {
      * Returns true if a given string is a valid Id number.
      */
     public static boolean isValidId(String test) {
-        assert test.length() > 3;
         if (test.matches(VALIDATION_REGEX)) {
             int firstIndex = Integer.parseInt(test.substring(0, 1));
             int secondIndex = Integer.parseInt(test.substring(1, 2));

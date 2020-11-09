@@ -63,7 +63,7 @@ public class Date {
         try {
             LocalDate.parse(date);
         } catch (DateTimeParseException e) {
-            result = e.toString().split("parse: ")[1];
+            result = e.getMessage();
         }
         return result;
     }

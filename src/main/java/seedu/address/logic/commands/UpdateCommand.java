@@ -61,7 +61,6 @@ public class UpdateCommand extends Command {
      * checks if the id intended to be change is taken
      */
     public boolean isUnique(ID id, ObservableList<Person> ul) {
-        System.out.println(id);
         return ul.size() == 0 || ul.stream().noneMatch(x -> x.getProfile().getId().value.equals(id.value));
     }
 
@@ -147,7 +146,6 @@ public class UpdateCommand extends Command {
         }
 
         public void setId(ID id) {
-            System.out.println(id);
             this.id = id;
         }
 

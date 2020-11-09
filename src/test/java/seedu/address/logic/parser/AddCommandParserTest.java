@@ -33,17 +33,6 @@ public class AddCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + DATE_DESC_2 + WEIGHT_DESC_2, new AddCommand(expectedDay));
-
-        //  not allowing multiple dates
-        //        // multiple dates - last date accepted
-        //        assertParseSuccess(parser, DATE_DESC_1 + DATE_DESC_2 + WEIGHT_DESC_2
-        //                + TAG_DESC_FRIEND, new AddCommand(expectedDay));
-
-        // multiple field not allowed
-        //        // multiple weights - last weight accepted
-        //        assertParseSuccess(parser, DATE_DESC_2 + WEIGHT_DESC_1 + WEIGHT_DESC_2
-        //                + TAG_DESC_FRIEND, new AddCommand(expectedDay));
-
     }
 
     @Test

@@ -1,0 +1,11 @@
+@startuml
+start
+:User add/modifies data (new day, weight and/or calorie) in DayList;
+:ListChangeListener detects a change;
+:updateChart() method is executed;
+:updateChart() clears existing data points and X-Axis (Dates) in lineChart;
+:initialize() method is executed to set the X-Axis with the new dates from DayList;
+:setWeightData() method is executed set new data points with the new weights from DayList;
+:Weight Line Chart is updated;
+stop
+@enduml

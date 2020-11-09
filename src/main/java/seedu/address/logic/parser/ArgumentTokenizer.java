@@ -39,9 +39,6 @@ public class ArgumentTokenizer {
     private static boolean isDuplicatePrefix(String argsString, Prefix... prefixes) {
         ArrayList<Integer> test = new ArrayList<>();
         for (Prefix prefix : prefixes) {
-            if (!(prefix.getPrefix() == "/t")) {
-                continue;
-            }
             String copy = argsString;
             test.add(copy.split(prefix.getPrefix()).length);
         }

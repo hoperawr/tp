@@ -1,0 +1,35 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+package UI <<Rectangle>>{
+Class MainWindow
+Class CalorieStatsWindow
+Class WeightStatsWindow
+Class CommanderBmiStatsWindow
+Class HelpWindow
+Class "{abstract}\nUiPart" as UiPart
+}
+
+package Model <<Rectangle>> {
+Class HiddenModel #FFFFFF
+}
+
+MainWindow *-down-> CalorieStatsWindow
+MainWindow *-down-> WeightStatsWindow
+MainWindow *-down-> CommanderBmiStatsWindow
+MainWindow *-down-> HelpWindow
+
+CalorieStatsWindow .up.> Model
+WeightStatsWindow .up..> Model
+CommanderBmiStatsWindow .up.> Model
+
+CalorieStatsWindow --|> UiPart
+WeightStatsWindow --|> UiPart
+CommanderBmiStatsWindow --|> UiPart
+HelpWindow --|> UiPart
+
+
+@enduml

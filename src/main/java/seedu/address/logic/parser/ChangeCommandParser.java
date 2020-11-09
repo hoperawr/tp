@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.ChangeCommand.MESSAGE_NO_CALORIE_DETERMINANT;
+import static seedu.address.logic.commands.ChangeCommand.MESSAGE_NO_DAY_DETERMINANT;
+import static seedu.address.logic.commands.ChangeCommand.MESSAGE_NO_TYPE_DETERMINANT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CALORIE_COUNT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CALORIE_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
@@ -14,14 +17,13 @@ import java.time.LocalDate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ChangeCommand;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 
 /**
  * Parses input arguments and creates a new ChangeCommand object
  */
-public class ChangeCommandParser {
+public class ChangeCommandParser implements Parser<ChangeCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the CalorieCommand
      * and returns an CalorieCommand object for execution.
@@ -33,41 +35,49 @@ public class ChangeCommandParser {
                 ArgumentTokenizer.tokenize(args, PREFIX_CALORIE_TYPE, PREFIX_DATE, PREFIX_FOOD,
                         PREFIX_EXERCISE, PREFIX_TIME, PREFIX_CALORIE_COUNT, PREFIX_INDEX);
 
-        if (argMultimap.getPreamble().isEmpty() & !argMultimap.getValue(PREFIX_DATE).isPresent()) {
-            throw new ParseException("Either input a date or an index to specify which "
-                    + "date the calorie to be edited is present but not both");
+        if (!(!argMultimap.getPreamble().isEmpty() ^ argMultimap.getValue(PREFIX_DATE).isPresent())) {
+            throw new ParseException(MESSAGE_NO_DAY_DETERMINANT);
         }
 
         Index index = null;
+        LocalDate date = null;
 
-        if (!argMultimap.getPreamble().isEmpty()) {
+        if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+            date = ParserUtil.parseLocalDate(argMultimap.getValue(PREFIX_DATE).get());
+        } else {
             try {
                 index = ParserUtil.parseIndex(argMultimap.getPreamble());
             } catch (ParseException pe) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangeCommand.MESSAGE_USAGE), pe);
             }
-        }
-
-        LocalDate date = null;
-        if (index == null) {
-            date = ParserUtil.parseLocalDate(argMultimap.getValue(PREFIX_DATE).get());
         }
 
         ChangeCommand.ChangeCalorieDescriptor changeCalorieDescriptor = new ChangeCommand.ChangeCalorieDescriptor();
 
         boolean isOut;
         if (argMultimap.getValue(PREFIX_CALORIE_TYPE).isPresent()) {
-            isOut = ParserUtil.parseType(argMultimap.getValue(PREFIX_CALORIE_TYPE).get());
-            changeCalorieDescriptor.setIsOut(isOut);
+            try {
+                isOut = ParserUtil.parseType(argMultimap.getValue(PREFIX_CALORIE_TYPE).get());
+                changeCalorieDescriptor.setIsOut(isOut);
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangeCommand.MESSAGE_USAGE), pe);
+            }
         } else {
-            throw new ParseException("Calorie type field cannot be empty");
+            throw new ParseException(MESSAGE_NO_TYPE_DETERMINANT);
         }
 
         Index calorieIndex;
         if (argMultimap.getValue(PREFIX_INDEX).isPresent()) {
-            calorieIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
+            try {
+                calorieIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ChangeCommand.MESSAGE_USAGE), pe);
+            }
         } else {
-            throw new ParseException("Index field to determine calorie to change cannot be empty");
+            throw new ParseException(MESSAGE_NO_CALORIE_DETERMINANT);
         }
 
 
@@ -90,7 +100,7 @@ public class ChangeCommandParser {
         }
 
         if (!changeCalorieDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException(ChangeCommand.MESSAGE_NOT_EDITED);
         }
 
         if (index != null) {

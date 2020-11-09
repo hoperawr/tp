@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.StatsCommand.SHOWING_ALL_STATS_MESSAGE;
 import static seedu.address.logic.commands.StatsCommand.SHOWING_CALORIE_STATS_MESSAGE;
+import static seedu.address.logic.commands.StatsCommand.SHOWING_COMMANDER_STATS_MESSAGE;
 import static seedu.address.logic.commands.StatsCommand.SHOWING_WEIGHT_STATS_MESSAGE;
 
 import org.junit.jupiter.api.Test;
@@ -63,6 +64,23 @@ public class StatsCommandTest {
         CommandResult expectedCommandResult =
                 new CommandResult(SHOWING_WEIGHT_STATS_MESSAGE, false, false, true, false);
         assertCommandSuccess(new StatsCommand(false, true, false), model,
+                expectedCommandResult, expectedModel);
+    }
+
+    @Test
+    public void execute_viewCommanderStats_success() {
+        CommandResult expectedCommandResult =
+                new CommandResult(SHOWING_COMMANDER_STATS_MESSAGE, false, false, false,
+                        false, false, false, false, 0, false, false, 0, true);
+        assertCommandSuccess(new StatsCommand(false, false, true), model,
+                expectedCommandResult, expectedModel);
+    }
+
+    @Test
+    public void execute_viewCommanderStatsOverloadedConstructor_success() {
+        CommandResult expectedCommandResult =
+                new CommandResult(SHOWING_COMMANDER_STATS_MESSAGE, false, false, false, true);
+        assertCommandSuccess(new StatsCommand(false, false, true), model,
                 expectedCommandResult, expectedModel);
     }
 

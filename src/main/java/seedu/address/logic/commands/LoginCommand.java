@@ -30,10 +30,16 @@ public class LoginCommand extends Command {
             throw new CommandException("not valid index");
         }
         Person toChange = ul.get(i);
-        //        System.out.println("current bmi :" + toChange.getCurrentBmi());
         model.setCurrentPerson(toChange);
         model.updateDay();
 
         return new CommandResult(true, toChange.toString());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LoginCommand // instanceof handles nulls
+                && i == (((LoginCommand) other).i)); // state check
     }
 }

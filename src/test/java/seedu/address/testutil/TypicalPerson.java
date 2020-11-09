@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.MyFitnessBuddy;
 import seedu.address.model.person.Person;
 
@@ -50,17 +51,53 @@ public class TypicalPerson {
             myFitnessBuddy.addPerson(person);
         }
         myFitnessBuddy.getPersonList().stream().forEach(x->x.getDayList().stream()
-                .forEach(y->y.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_A)));
+                .forEach(y-> {
+                    try {
+                        y.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_A);
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                    }
+                }));
         myFitnessBuddy.getPersonList().stream().forEach(x->x.getDayList().stream()
-                .forEach(y->y.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_B)));
+                .forEach(y-> {
+                    try {
+                        y.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_B);
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                    }
+                }));
         myFitnessBuddy.getPersonList().stream().forEach(x->x.getDayList().stream()
-                .forEach(y->y.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_C)));
+                .forEach(y-> {
+                    try {
+                        y.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_C);
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                    }
+                }));
         myFitnessBuddy.getPersonList().stream().forEach(x->x.getDayList().stream()
-                .forEach(y->y.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_A)));
+                .forEach(y-> {
+                    try {
+                        y.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_A);
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                    }
+                }));
         myFitnessBuddy.getPersonList().stream().forEach(x->x.getDayList().stream()
-                .forEach(y->y.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_B)));
+                .forEach(y-> {
+                    try {
+                        y.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_B);
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                    }
+                }));
         myFitnessBuddy.getPersonList().stream().forEach(x->x.getDayList().stream()
-                .forEach(y->y.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_C)));
+                .forEach(y-> {
+                    try {
+                        y.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_C);
+                    } catch (IllegalValueException e) {
+                        e.printStackTrace();
+                    }
+                }));
         return myFitnessBuddy;
     }
 }

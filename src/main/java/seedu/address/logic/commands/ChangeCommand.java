@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_DAYS;
 
@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -33,17 +34,22 @@ public class ChangeCommand extends Command {
 
     public static final String COMMAND_WORD = "change";
 
-    public static final String DUPLICATE_TIME = "There exist a calorie with the same time";
+    public static final String MESSAGE_NO_DAY_DETERMINANT = " Either input a date or an index to specify which "
+            + "date the calorie to be edited is present but not both ";
+
+    public static final String MESSAGE_NO_CALORIE_DETERMINANT =
+            " Index field to determine calorie to change cannot be empty ";
+
+    public static final String MESSAGE_NO_TYPE_DETERMINANT = " Calorie type field cannot be empty";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the calorie identified "
             + "by the index number used in the displayed calorie list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_TIME + "TIME] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
-    public static final String MESSAGE_EDIT_DAY_SUCCESS = "Edited Calorie: %1$s";
+    public static final String MESSAGE_EDIT_CALORIE_SUCCESS = "Edited Calorie: %1$s";
 
     public static final String MESSAGE_NOT_EDITED = "Please edit at least one of the calorie field";
 
@@ -59,8 +65,7 @@ public class ChangeCommand extends Command {
      */
     public ChangeCommand(Index index, ChangeCommand.ChangeCalorieDescriptor changeCalorieDescriptor,
                          Index calorieIndex) {
-        requireNonNull(index);
-        requireNonNull(changeCalorieDescriptor);
+        requireAllNonNull(index, changeCalorieDescriptor, calorieIndex);
 
         this.index = index;
         this.changeCalorieDescriptor = new ChangeCommand.ChangeCalorieDescriptor(changeCalorieDescriptor);
@@ -73,8 +78,7 @@ public class ChangeCommand extends Command {
      */
     public ChangeCommand(LocalDate date, ChangeCommand.ChangeCalorieDescriptor changeCalorieDescriptor,
                          Index calorieIndex) {
-        requireNonNull(date);
-        requireNonNull(changeCalorieDescriptor);
+        requireAllNonNull(date, changeCalorieDescriptor, calorieIndex);
 
         this.date = date;
         this.changeCalorieDescriptor = new ChangeCommand.ChangeCalorieDescriptor(changeCalorieDescriptor);
@@ -94,13 +98,21 @@ public class ChangeCommand extends Command {
                 editDay = lastShownList.get(index.getZeroBased());
             }
         } else {
-            editDay = model.getDay(date);
+            if (!model.hasDay(date)) {
+                throw new CommandException(Messages.MESSAGE_INVALID_DAY_DISPLAYED_INDEX);
+            } else {
+                editDay = model.getDay(date);
+            }
         }
-
         Boolean isOut = changeCalorieDescriptor.getIsOut();
         CalorieManager calorieManager = editDay.getCalorieManager();
 
-        Calorie calorieToEdit = calorieManager.getCalorie(isOut, calorieIndex);
+        Calorie calorieToEdit = null;
+        try {
+            calorieToEdit = calorieManager.getCalorie(isOut, calorieIndex);
+        } catch (IllegalValueException e) {
+            throw new CommandException(Messages.MESSAGE_INVALID_CALORIE_DISPLAYED_INDEX);
+        }
         Calorie editedCalorie = createEditedCalorie(calorieToEdit, changeCalorieDescriptor);
 
         if (isOut) {
@@ -119,15 +131,24 @@ public class ChangeCommand extends Command {
             }
         }
 
-        CalorieManager cm = calorieManager.setCalorie(calorieIndex, changeCalorieDescriptor.getIsOut(), editedCalorie);
+        CalorieManager cm = null;
+        try {
+            cm = calorieManager.setCalorie(calorieIndex, changeCalorieDescriptor.getIsOut(), editedCalorie);
+        } catch (IllegalValueException e) {
+            throw new CommandException(e.getMessage());
+        }
         Date date = editDay.getDate();
         Weight weight = editDay.getWeight();
+
         Day editedDay = new Day(date, weight, cm);
+        editedDay.setHeight(editDay.getHeight());
+        editedDay.setStartingWeight(editDay.getStartingWeight());
+        editDay.setAge(editDay.getAge());
 
         model.setDay(editDay, editedDay);
         model.updateFilteredDayList(PREDICATE_SHOW_ALL_DAYS);
 
-        return new CommandResult(String.format(MESSAGE_EDIT_DAY_SUCCESS, editedCalorie));
+        return new CommandResult(String.format(MESSAGE_EDIT_CALORIE_SUCCESS, editedCalorie));
     }
 
     /**
@@ -155,6 +176,32 @@ public class ChangeCommand extends Command {
         }
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof ChangeCommand)) {
+            return false;
+        }
+
+        // state check
+        ChangeCommand e = (ChangeCommand) other;
+
+        boolean temp;
+        if (index != null) {
+            temp = index.equals(e.index);
+        } else {
+            temp = date.equals(e.date);
+        }
+
+        return temp
+                && calorieIndex.equals(e.calorieIndex)
+                && changeCalorieDescriptor.equals(e.changeCalorieDescriptor);
+    }
     /**
      * Stores the details to edit the calorie with. Each non-empty field value will replace the
      * corresponding field value of the calorie.
@@ -235,7 +282,7 @@ public class ChangeCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditCommand.EditDayDescriptor)) {
+            if (!(other instanceof ChangeCommand.ChangeCalorieDescriptor)) {
                 return false;
             }
 
@@ -243,7 +290,7 @@ public class ChangeCommand extends Command {
             ChangeCommand.ChangeCalorieDescriptor e = (ChangeCommand.ChangeCalorieDescriptor) other;
 
             return getTime().equals(e.getTime())
-                    && getTime().equals(e.getTime())
+                    && getIsOut().equals(e.getIsOut())
                     && getCalorieCount().equals(e.getCalorieCount())
                     && getExercise().equals(e.getExercise())
                     && getFood().equals(e.getFood());

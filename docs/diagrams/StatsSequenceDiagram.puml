@@ -1,0 +1,78 @@
+@startuml
+!include style.puml
+
+box Ui UI_COLOR_T1
+participant ":WeightStatsWindow" as WeightStatsWindow UI_COLOR
+participant ":MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MyFitnessBuddyParser" as MyFitnessBuddyParser LOGIC_COLOR
+participant ":StatsCommandParser" as StatsCommandParser LOGIC_COLOR
+participant "s:StatsCommand" as StatsCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+activate MainWindow
+activate WeightStatsWindow
+
+MainWindow-> LogicManager : execute("stats v/weight")
+activate LogicManager
+
+LogicManager -> MyFitnessBuddyParser : parseCommand("stats v/weight")
+activate MyFitnessBuddyParser
+
+create StatsCommandParser
+MyFitnessBuddyParser -> StatsCommandParser : parse(" v/weight")
+activate StatsCommandParser
+
+
+create StatsCommand
+StatsCommandParser -> StatsCommand
+activate StatsCommand
+
+deactivate StatsCommandParser
+destroy StatsCommandParser
+
+StatsCommand --> MyFitnessBuddyParser : s
+deactivate StatsCommand
+
+MyFitnessBuddyParser --> LogicManager : s
+deactivate MyFitnessBuddyParser
+
+LogicManager -> StatsCommand : execute()
+activate StatsCommand
+
+create CommandResult
+StatsCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> StatsCommand
+deactivate CommandResult
+
+StatsCommand --> LogicManager : result
+deactivate StatsCommand
+
+MainWindow<--LogicManager
+deactivate LogicManager
+destroy CommandResult
+destroy StatsCommand
+
+MainWindow -> MainWindow : handleWeightStats()
+activate MainWindow UI_COLOR
+alt WeightStatsWindow == showing
+MainWindow -> WeightStatsWindow : focus()
+activate WeightStatsWindow UI_COLOR
+WeightStatsWindow --> WeightStatsWindow
+deactivate WeightStatsWindow
+else else
+MainWindow -> WeightStatsWindow : show()
+activate WeightStatsWindow UI_COLOR
+WeightStatsWindow --> WeightStatsWindow
+deactivate WeightStatsWindow
+end
+MainWindow --> MainWindow
+deactivate MainWindow
+
+@enduml

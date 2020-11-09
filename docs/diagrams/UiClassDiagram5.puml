@@ -1,0 +1,40 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+package Model <<Rectangle>> {
+Class HiddenModel #FFFFFF
+}
+
+
+package UI <<Rectangle>>{
+Class "MainWindow" as MainWindow
+Class CalorieInputCard
+Class CalorieInputListPanel
+Class CalorieOutputCard
+Class CalorieOutputListPanel
+Class "{abstract}\nUiPart" as UiPart
+}
+
+CalorieInputListPanel -right[hidden]- CalorieInputCard
+CalorieInputCard -right[hidden]- CalorieOutputListPanel
+CalorieOutputListPanel -right[hidden]- CalorieOutputCard
+
+CalorieInputListPanel *-> CalorieInputCard
+CalorieOutputListPanel *-> CalorieOutputCard
+
+MainWindow *-down-> CalorieInputListPanel
+MainWindow *-down-> CalorieOutputListPanel
+
+CalorieInputListPanel --|> UiPart
+CalorieInputCard --|> UiPart
+CalorieOutputListPanel --|> UiPart
+CalorieOutputCard --|> UiPart
+
+CalorieInputCard .[hidden].> Model
+CalorieInputCard ..> Model
+CalorieOutputCard .down.> Model
+
+@enduml

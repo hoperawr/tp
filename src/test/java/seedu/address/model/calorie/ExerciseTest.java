@@ -1,6 +1,8 @@
 package seedu.address.model.calorie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -29,6 +31,13 @@ public class ExerciseTest {
         assertTrue(Exercise.isValidExercise("running@stadium")); // contains special character
         assertTrue(Exercise.isValidExercise("run for 5km")); // contains number and space
         assertTrue(Exercise.isValidExercise("run for 5km @ track")); // contains number, alphabet and special char
+    }
+
+    @Test
+    public void isEquals() {
+        assertEquals(new Exercise("running"), new Exercise("running"));
+        assertNotEquals(new Exercise("running"), new Exercise("swimming"));
+        assertNotEquals(new Exercise("running"), new Object());
     }
 
 }

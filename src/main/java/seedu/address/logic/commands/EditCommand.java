@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_DAYS;
 
 import java.util.List;
@@ -30,7 +29,6 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_DATE + "DATE] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_EDIT_DAY_SUCCESS = "Edited Day: %1$s";
@@ -66,6 +64,9 @@ public class EditCommand extends Command {
         if (!dayToEdit.isSameDay(editedDay) && model.hasDay(editedDay)) {
             throw new CommandException(MESSAGE_DUPLICATE_DAY);
         }
+        editedDay.setAge(dayToEdit.getAge());
+        editedDay.setHeight(dayToEdit.getHeight());
+        editedDay.setStartingWeight(dayToEdit.getStartingWeight());
 
         model.setDay(dayToEdit, editedDay);
         model.updateFilteredDayList(PREDICATE_SHOW_ALL_DAYS);

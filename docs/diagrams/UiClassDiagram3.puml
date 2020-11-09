@@ -1,0 +1,35 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor UI_COLOR_T4
+skinparam classBackgroundColor UI_COLOR
+
+package Model <<Rectangle>> {
+Class HiddenModel #FFFFFF
+}
+
+
+package UI <<Rectangle>>{
+Class "MainWindow" as MainWindow
+Class DayListPanel
+Class DayCard
+Class "{abstract}\nUiPart" as UiPart
+}
+
+MainWindow *-down-> DayListPanel
+
+DayListPanel -right[hidden]- DayCard
+
+
+DayListPanel *-> DayCard
+
+DayListPanel --|> UiPart
+DayCard --|> UiPart
+
+DayCard *-up-> MainWindow
+
+DayCard .down.> Model
+
+
+
+@enduml

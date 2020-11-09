@@ -35,13 +35,6 @@ public class Input extends Calorie {
     }
 
     /**
-     * Returns true if the current input happens after the input input
-     */
-    public boolean happenAfter(Input input) {
-        return this.getTime().isAfter(input.getTime());
-    }
-
-    /**
      * Returns true if a otherInput has the same attributes as this Input
      * @param otherInput that is being checked with
      */

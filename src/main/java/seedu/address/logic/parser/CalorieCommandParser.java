@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CALORIE_COUNT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CALORIE_TYPE;
@@ -33,11 +34,13 @@ public class CalorieCommandParser implements Parser<CalorieCommand> {
      */
     @Override
     public CalorieCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_CALORIE_TYPE, PREFIX_DATE, PREFIX_TIME,
                         PREFIX_EXERCISE, PREFIX_FOOD, PREFIX_CALORIE_COUNT);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_CALORIE_TYPE) || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_CALORIE_TYPE, PREFIX_TIME, PREFIX_CALORIE_COUNT)
+                || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalorieCommand.MESSAGE_USAGE));
         }
         Boolean isOut = ParserUtil.parseType(argMultimap.getValue(PREFIX_CALORIE_TYPE).get());
@@ -49,22 +52,23 @@ public class CalorieCommandParser implements Parser<CalorieCommand> {
             date = LocalDate.now().toString();
         }
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_TIME, PREFIX_CALORIE_COUNT)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalorieCommand.MESSAGE_USAGE));
-        }
-
         Time time = ParserUtil.parseTime(argMultimap.getValue(PREFIX_TIME).get());
         CalorieCount calorieCount = ParserUtil.parseCalorieCount(argMultimap.getValue(PREFIX_CALORIE_COUNT).get());
 
         Calorie calorie;
-        if (arePrefixesPresent(argMultimap, PREFIX_FOOD) && arePrefixesPresent(argMultimap, PREFIX_EXERCISE)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalorieCommand.MESSAGE_USAGE_2));
+
+        if (arePrefixesPresent(argMultimap, PREFIX_EXERCISE) && arePrefixesPresent(argMultimap, PREFIX_FOOD)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalorieCommand.MESSAGE_USAGE));
         }
 
-        if ((!arePrefixesPresent(argMultimap, PREFIX_EXERCISE) && !isOut)
-                || (!arePrefixesPresent(argMultimap, PREFIX_FOOD) && isOut)) {
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, CalorieCommand.MESSAGE_USAGE));
+        if (arePrefixesPresent(argMultimap, PREFIX_FOOD) && isOut) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    CalorieCommand.MESSAGE_USAGE_TYPE_OUT));
+        }
+
+        if (arePrefixesPresent(argMultimap, PREFIX_EXERCISE) && !isOut) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    CalorieCommand.MESSAGE_USAGE_TYPE_IN));
         }
 
         if (!isOut) {

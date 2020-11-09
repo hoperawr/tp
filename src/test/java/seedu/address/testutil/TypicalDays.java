@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.MyFitnessBuddy;
 import seedu.address.model.day.Day;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.Profile;
 
 /**
@@ -40,6 +43,43 @@ public class TypicalDays {
     public static final Profile DEFAULT_PROFILE = TypicalProfiles.DEFAULT_PROFILE;
 
     private TypicalDays() {} // prevents instantiation
+
+    /**
+     * Returns an {@code MyFitnessBuddy} with all the typical days.
+     */
+    public static MyFitnessBuddy getTypicalMyFitnessBuddy() {
+        MyFitnessBuddy myFitnessBuddy = new MyFitnessBuddy();
+        myFitnessBuddy.setPerson(new Person(DEFAULT_PROFILE)); // sets to default profile
+        for (Day day : getTypicalDays()) {
+            myFitnessBuddy.addDay(day);
+        }
+        return myFitnessBuddy;
+    }
+
+    /**
+     * Returns an {@code getAnotherFitnessBuddy} with all the typical days and calories in them.
+     */
+    public static MyFitnessBuddy getAnotherMyFitnessBuddy() {
+        MyFitnessBuddy ab = new MyFitnessBuddy();
+        ab.setPerson(new Person(DEFAULT_PROFILE));
+        for (Day day : getTypicalDays()) {
+            ab.addDay(day);
+        }
+        try {
+            for (Day d : ab.getDayList()) {
+                d.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_A);
+                d.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_B);
+                d.getCalorieManager().addCalorieInput(TypicalCalories.INPUT_C);
+                d.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_A);
+                d.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_B);
+                d.getCalorieManager().addCalorieOutput(TypicalCalories.OUTPUT_C);
+            }
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
+
+        return ab;
+    }
 
     public static List<Day> getTypicalDays() {
         return new ArrayList<>(Arrays.asList(DAY1, DAY2, DAY3, DAY4, DAY5, DAY6, DAY7));

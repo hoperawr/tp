@@ -35,13 +35,6 @@ public class Output extends Calorie {
     }
 
     /**
-     * Returns true if the current output happens after the input output
-     */
-    public boolean happenAfter(Output output) {
-        return this.getTime().isAfter(output.getTime());
-    }
-
-    /**
      * Returns true if a otherOutput has the same attributes as this Output
      * @param otherOutput that is being checked with
      */

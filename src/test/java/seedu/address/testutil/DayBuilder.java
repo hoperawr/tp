@@ -1,10 +1,10 @@
 package seedu.address.testutil;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.calorie.CalorieManager;
 import seedu.address.model.day.Date;
 import seedu.address.model.day.Day;
 import seedu.address.model.day.Weight;
-//import seedu.address.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Day objects.
@@ -35,8 +35,12 @@ public class DayBuilder {
         date = dayToCopy.getDate();
         weight = dayToCopy.getWeight();
         calorieManager = dayToCopy.getCalorieManager();
-        calorieManager.addCalorieOutput(new CalorieBuilder().buildOutput());
-        calorieManager.addCalorieInput(new CalorieBuilder().buildInput());
+        try {
+            calorieManager.addCalorieOutput(new CalorieBuilder().buildOutput());
+            calorieManager.addCalorieInput(new CalorieBuilder().buildInput());
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

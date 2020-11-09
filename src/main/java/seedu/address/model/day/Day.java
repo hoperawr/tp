@@ -56,6 +56,17 @@ public class Day {
         return calorieManager;
     }
 
+    public Height getHeight() {
+        return height;
+    }
+
+    public Weight getStartingWeight() {
+        return startingWeight;
+    }
+
+    public int getAge() {
+        return age;
+    }
 
     /**
      * Returns true if both days are of the same date and not the weight and tag field.
@@ -120,6 +131,9 @@ public class Day {
         return builder.toString();
     }
 
+    /**
+     * Returns the amount of calorie budget for a particular day
+     */
     public int getBalance() {
         if (height == null || weight == null) {
             return -1;
@@ -127,14 +141,20 @@ public class Day {
             int bmr = CalorieBudget.calculateBasalMetabolic(height, weight, age);
             int calorieIn = calorieManager.getTotalInputCalorie();
             int calorieOut = getCalorieManager().getTotalOutputCalorie();
-            return CalorieBudget.calculateCalorieSurplus(bmr, calorieIn, calorieOut);
+            return CalorieBudget.calculateCalorieSurplus(calorieIn, calorieOut, bmr);
         }
     }
 
+    /**
+     * is the the person currently losing weight calorie budget > 0
+     */
     public boolean isLosing() {
         return getBalance() >= 0;
     }
 
+    /**
+     * returns the progress of the person towards the idea bmi
+     */
     public double getProgress() {
         double currentBmi = Bmi.calculateBmi(height, weight);
         double startBmi = Bmi.calculateBmi(height, startingWeight);

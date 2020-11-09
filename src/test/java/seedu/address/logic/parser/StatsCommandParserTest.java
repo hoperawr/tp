@@ -34,6 +34,13 @@ public class StatsCommandParserTest {
     }
 
     @Test
+    public void parse_viewCommanderStats_success() {
+        String userInput = " v/commander";
+        StatsCommand expectedCommand = new StatsCommand(false, false, true);
+        assertParseSuccess(parser, userInput, expectedCommand);
+    }
+
+    @Test
     public void parse_noParameter_failure() {
         String userInput = "";
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, StatsCommand.MESSAGE_USAGE);

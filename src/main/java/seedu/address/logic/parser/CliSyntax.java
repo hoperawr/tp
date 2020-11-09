@@ -9,7 +9,6 @@ public class CliSyntax {
     /* Prefixes for day commands */
     public static final Prefix PREFIX_DATE = new Prefix("d/");
     public static final Prefix PREFIX_WEIGHT = new Prefix("w/");
-    public static final Prefix PREFIX_TAG = new Prefix("t/");
 
     /* Prefixes for calorie commands */
     public static final Prefix PREFIX_CALORIE_TYPE = new Prefix("tp/");

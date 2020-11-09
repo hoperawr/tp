@@ -1,6 +1,8 @@
 package seedu.address.model.calorie;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -42,5 +44,14 @@ public class TimeTest {
         assertTrue(Time.isValidTime("0000")); // alphabets only
         assertTrue(Time.isValidTime("1230")); // alphabets only
 
+    }
+
+    @Test
+    public void isEquals() {
+        Time time = new Time("0200");
+        assertEquals(time, time);
+        assertEquals(new Time("1130"), new Time("1130"));
+        assertNotEquals(new Time("1130"), new Time("2359"));
+        assertNotEquals(new Time("1130"), new Object());
     }
 }

@@ -7,8 +7,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 /**
- * @@author jewelsea-adapted
- * Adapted from https://gist.github.com/jewelsea/4681797 with modifications
+ * @@author jewelsea-Reused
+ * Reused from https://gist.github.com/jewelsea/4681797 with modifications
  *
  * A node which displays a value when the mouse cursor hovers over it for calorie chart.
  */

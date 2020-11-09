@@ -1,0 +1,77 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MyFitnessBuddyParser" as MyFitnessBuddyParser LOGIC_COLOR
+participant ":AddCommandParser" as AddCommandParser LOGIC_COLOR
+participant "a:AddCommand" as AddCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+participant ":UniqueDayList" as UniqueDayList MODEL_COLOR
+end box
+[-> LogicManager : execute("add d/2020-11-08 w/76")
+activate LogicManager
+
+LogicManager -> MyFitnessBuddyParser : parseCommand(add)
+activate  MyFitnessBuddyParser
+
+create AddCommandParser
+MyFitnessBuddyParser -> AddCommandParser : parse("date weight")
+activate AddCommandParser
+
+create AddCommand
+AddCommandParser -> AddCommand
+activate AddCommand
+
+deactivate AddCommandParser
+destroy AddCommandParser
+
+AddCommand -->  MyFitnessBuddyParser : a
+deactivate AddCommand
+
+ MyFitnessBuddyParser --> LogicManager : a
+deactivate MyFitnessBuddyParser
+
+LogicManager -> AddCommand : execute()
+activate AddCommand
+
+AddCommand -> Model : addDay(Day)
+activate Model
+
+Model -> Person : addDay(Day)
+activate Person
+
+Person -> UniqueDayList : add(Day)
+activate UniqueDayList
+
+
+UniqueDayList --> Person
+deactivate UniqueDayList
+
+Person --> Model
+deactivate Person
+
+Model --> AddCommand
+deactivate Model
+
+create CommandResult
+AddCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddCommand
+deactivate CommandResult
+
+AddCommand --> LogicManager : result
+deactivate AddCommand
+AddCommand -[hidden]-> LogicManager : result
+destroy AddCommand
+destroy CommandResult
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

@@ -36,8 +36,8 @@ public class Height {
      * Returns true if a given string is a valid height number.
      */
     public static boolean isValidHeight(String test) {
+        requireNonNull(test);
         int testHeight;
-        assert test.length() > 0;
         try {
             testHeight = Integer.parseInt(test);
         } catch (NumberFormatException e) {

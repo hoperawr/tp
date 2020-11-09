@@ -30,7 +30,6 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
             editProfileDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
         if (argMultimap.getValue(PREFIX_ID).isPresent()) {
-            System.out.println("---");
             editProfileDescriptor.setId(ParserUtil.parseID(argMultimap.getValue(PREFIX_ID).get()));
         }
         if (argMultimap.getValue(PREFIX_HEIGHT).isPresent()) {
@@ -40,7 +39,6 @@ public class UpdateCommandParser implements Parser<UpdateCommand> {
             editProfileDescriptor.setWeight(ParserUtil.parseWeight(argMultimap.getValue(PREFIX_WEIGHT).get()));
         }
         if (!editProfileDescriptor.isAnyFieldEdited()) {
-            System.out.println(editProfileDescriptor.getId());
             throw new ParseException(UpdateCommand.MESSAGE_NOT_EDITED);
         }
 

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.day.Date.isCorrectRegrex;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -9,6 +8,7 @@ import java.time.format.DateTimeParseException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.calorie.Calorie;
 import seedu.address.model.calorie.CalorieCount;
 import seedu.address.model.calorie.Exercise;
 import seedu.address.model.calorie.Food;
@@ -25,7 +25,9 @@ import seedu.address.model.person.Name;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_BMI = "Please input a valid BMI value";
     public static final String MESSAGE_DUPLICATE_PREFIX = "There should only be one prefix for each field";
+    public static final String MESSAGE_INVALID_DATE = "Date should be in the form of YYYY-MM-DD";
     public static final double HEAVIEST_PERSON = 635;
     public static final double LIGHTEST_PERSON = 2.13;
 
@@ -50,17 +52,13 @@ public class ParserUtil {
      */
     public static Date parseDate(String date) throws ParseException {
         requireNonNull(date);
-        String trimmedDate = date.trim();
-        if (!isCorrectRegrex(trimmedDate)) {
-            throw new ParseException(Date.MESSAGE_CONSTRAINTS);
-        }
         try {
+            String trimmedDate = date.trim();
             LocalDate.parse(trimmedDate);
+            return new Date(trimmedDate);
         } catch (DateTimeParseException e) {
-            String errorMessage = (e.toString().split("parsed: ")[1]);
-            throw new ParseException(errorMessage);
+            throw new ParseException(MESSAGE_INVALID_DATE);
         }
-        return new Date(trimmedDate);
     }
 
     /**
@@ -158,7 +156,7 @@ public class ParserUtil {
         case "in":
             return false;
         default:
-            throw new ParseException("type can only be either in/out");
+            throw new ParseException(Calorie.MESSAGE_TYPE_CONSTRAINT);
         }
     }
 
@@ -168,18 +166,12 @@ public class ParserUtil {
     public static LocalDate parseLocalDate(String date) throws ParseException {
         requireNonNull(date);
         String toCheck = date.trim();
-        if (!isCorrectRegrex(toCheck)) {
-            throw new ParseException(Date.MESSAGE_CONSTRAINTS);
-        }
-        LocalDate result;
         try {
-            result = LocalDate.parse(toCheck);
+            LocalDate result = LocalDate.parse(toCheck);
+            return result;
         } catch (DateTimeParseException e) {
-            String errorMessage = (e.toString().split("parsed: ")[1]);
-            throw new ParseException(errorMessage);
+            throw new ParseException(MESSAGE_INVALID_DATE);
         }
-
-        return result;
     }
 
     /**
@@ -227,11 +219,14 @@ public class ParserUtil {
      */
     public static double parseBmi(String bmi) throws ParseException {
         requireNonNull(bmi);
-        String trimmedHeight = bmi.trim();
         try {
-            return Double.parseDouble(bmi);
+            double resultBmi = Double.parseDouble(bmi);
+            if (resultBmi < 1 || resultBmi > 400) {
+                throw new ParseException(MESSAGE_INVALID_BMI);
+            }
+            return resultBmi;
         } catch (Exception e) {
-            throw new ParseException("Please input a valid BMI");
+            throw new ParseException(MESSAGE_INVALID_BMI);
         }
     }
 }

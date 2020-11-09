@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.RemoveCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -34,9 +33,9 @@ public class RemoveCommandParser implements Parser<RemoveCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveCommand.MESSAGE_USAGE));
         }
 
-        if (argMultimap.getPreamble().isEmpty() & !argMultimap.getValue(PREFIX_DATE).isPresent()) {
-            throw new ParseException("Either input a date or an index to specify which "
-                    + "date the calorie to be edited is present but not both");
+
+        if (!(!argMultimap.getPreamble().isEmpty() ^ argMultimap.getValue(PREFIX_DATE).isPresent())) {
+            throw new ParseException(RemoveCommand.MESSAGE_MISSING_DAY_DETERMINANT);
         }
 
         Index dayIndex = null;
@@ -45,7 +44,8 @@ public class RemoveCommandParser implements Parser<RemoveCommand> {
             try {
                 dayIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
             } catch (ParseException pe) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        RemoveCommand.MESSAGE_USAGE), pe);
             }
         }
 

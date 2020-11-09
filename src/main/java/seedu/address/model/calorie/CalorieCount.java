@@ -9,7 +9,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class CalorieCount {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Calorie Count should only be positive integer, and it should not be blank";
+            "Calorie Count should be a non zero positive integer equal or less than 2147483647,\n"
+                    + " and it should not be blank";
 
     public static final String VALIDATION_REGEX = "[1-9][\\p{Digit}]*";
 
@@ -26,7 +27,18 @@ public class CalorieCount {
         this.calorieCount = calorieCount;
     }
 
+    /**
+     * Returns true if the test is a valid calorieCount input
+     * @param test string input to be tested
+     */
     public static boolean isValidCalorieCount(String test) {
+        requireNonNull(test);
+        try {
+            Integer.parseInt(test);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
         return test.matches(VALIDATION_REGEX);
     }
 

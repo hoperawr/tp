@@ -216,19 +216,25 @@ Below is a sequence diagram when the user executes `add d/2020-11-08 w/76` into 
 This feature allows users to add a calorie to the calorie manager of the day with the specified date.   
 If no date is specified, calorie command takes the system date and adds it to the day with the date.
 
-This is an activity diagram to demostrate what happens when the user uses the calorie command
+Activity diagram to demonstrate what happens when the user uses the calorie command:
 ![AddCalorieActivity](images/AddCalorieActivity.png)
 
 #### Implementation
 Step 1: CalorieCommand.execute(model) is called by Logic Manager which gives a Model object as argument.  
+
 Step 2:  CalorieCommand will first check whether the Model object has a day with the date. If false, it throws an error.  
+
 Step 3: CalorieCommand will try to get the Day object. First, it calls model.getDay(date), which calls the MyFitnessBuddy object getDay(date) which calls the Person object getDay(date) which finally calls UniqueDayList object getDate(date) and returns a Day object.  
+
 Step 4: It will then assign the Day object to two Day objects, editDay and targetDay.  
+
 Step 5: CalorieCommand will then edit the Day by changing the Day object’s CalorieManager object. First, it calls editDay.getCalorieManager() to get the Day object’s CalorieManager object.  
+
 Step 6: Depending on whether the boolean isOut is true, it adds the appropriate calorie to the CalorieManager object. If isOut is true, it calls addCalorieOutput(calorie), else it calls addCalorieInput(calorie)  
+
 Step 7: After changing editDay, CalorieCommand will call model.setDay(editDay, targetDay) to replace the targetDay with the edited Day object which contains the new Calorie.  
 
-Sequence diagram when CalorieCommand is executed
+Sequence diagram when CalorieCommand is executed:
 ![AddCalorieSequenceDiagram](images/AddCalorieSequence.png)
 
 #### Design Considerations

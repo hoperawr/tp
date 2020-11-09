@@ -13,11 +13,14 @@ This user guide serves to provide you with the necessary instructions on how to 
 
 Choose a topic from the [Table of Contents](#table-of-contents) below.
 
+<div style="page-break-after: always;"></div>
+
 ## Table of Contents
 * Table of Contents
 {:toc}  
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## 1. Introduction
 (Contributed by Hope)  
@@ -36,6 +39,8 @@ We have also implemented a commander's version that would allow commanders to ha
  We hope that through the use of this application, soldiers can take charge of their own fitness and achieve the results they strive for. 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## 2. About
 (Contributed by Hope)  
 ### 2.1 Using this User Guide
@@ -69,6 +74,7 @@ All commands in the following sections follow the same format.
 	 e.g. `add d/2020-10-25 w/70`
 	
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## 3. Getting Started
 ### 3.1 Downloading and opening the application
@@ -111,6 +117,7 @@ are some general usage scenarios of our application that you can try when gettin
 Head to [Features](#4-features) below to learn more details of each command. 
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## 4. Features
 (Contributed by Jun Hui)
@@ -555,7 +562,7 @@ My Fitness Buddy data are saved in the hard disk automatically after any command
 
 
 --------------------------------------------------------------------------------------------------------------------
-
+<div style="page-break-after: always;"></div>
 ## 5. FAQ
 (Contributed by Ethan)
 
@@ -588,7 +595,7 @@ your data.
 the lists will not show anything. The status bar will still update informing you that you are 
 viewing that particular day. 
 --------------------------------------------------------------------------------------------------------------------
-
+<div style="page-break-after: always;"></div>
 ## 6. Command summary
 (Contributed by Ethan)
 

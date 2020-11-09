@@ -5,6 +5,10 @@ import seedu.address.logic.commands.LoginCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
+<<<<<<< HEAD
+=======
+ * Parse user input for login command
+>>>>>>> 3acc5a5225eaa68828ed4c46426e7a327b3fa4b9
  * Parse user input to determine which index to change to
  */
 public class LoginCommandParser implements Parser<LoginCommand> {

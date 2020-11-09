@@ -29,9 +29,16 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New day added: %1$s";
     public static final String MESSAGE_DUPLICATE_DAY = "This day already exists in the records.";
+<<<<<<< HEAD
     public static final String MESSAGE_PAST = "You are not allowed to add a day record "
             + "with a date before the current profile is added?";
     public static final String MESSAGE_FUTURE = "You are not allowed to add any future day record";
+=======
+    public static final String MESSAGE_PAST = "You cannot add a day entry prior "
+            + "to the date you have create this profile";
+    public static final String MESSAGE_FUTURE = "You cannot add a day entry that is in the future";
+
+>>>>>>> 3acc5a5225eaa68828ed4c46426e7a327b3fa4b9
     public static final String MESSAGE_NO_LOGIN = "Please login to a profile before adding a new day.";
 
     private final Day toAdd;
@@ -44,13 +51,19 @@ public class AddCommand extends Command {
         toAdd = day;
     }
 
-    private boolean isBefore(Date toAdd, Date start) {
+    /**
+     * Checks if the toAdd date is before the starting date
+     */
+    public boolean isBefore(Date toAdd, Date start) {
         LocalDate add = LocalDate.parse(toAdd.value);
         LocalDate compareTo = LocalDate.parse(start.value);
         return add.isBefore(compareTo);
     }
 
-    private boolean isAfter(Date toAdd) {
+    /**
+     * Checks if the toAdd date is after the current date
+     */
+    public boolean isAfter(Date toAdd) {
         LocalDate add = LocalDate.parse(toAdd.value);
         LocalDate compareTo = LocalDate.now();
         return add.isAfter(compareTo);
@@ -63,14 +76,12 @@ public class AddCommand extends Command {
         Date start = model.getMyFitnessBuddy().getPerson().getDay();
         Date check = toAdd.getDate();
 
+        if (model.isDefaultProfile()) { //no profile
+            throw new CommandException(MESSAGE_NO_LOGIN);
+        }
+
         if (model.hasDay(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_DAY);
-        }
-        if (model.isDefaultProfile()) { //no profile
-            throw new CommandException(CreateCommand.MESSAGE_NO_PROFILE);
-        }
-        if (start == null) {
-            throw new CommandException(MESSAGE_NO_LOGIN);
         }
 
         if (isBefore(check, start)) {

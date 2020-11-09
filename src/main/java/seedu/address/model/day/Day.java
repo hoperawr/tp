@@ -158,7 +158,10 @@ public class Day {
     public double getProgress() {
         double currentBmi = Bmi.calculateBmi(height, weight);
         double startBmi = Bmi.calculateBmi(height, startingWeight);
+<<<<<<< HEAD
         System.out.println(startBmi);
+=======
+>>>>>>> 3acc5a5225eaa68828ed4c46426e7a327b3fa4b9
         if (startBmi < 22.5) {
             return 1;
         }

@@ -5,7 +5,8 @@ title: Ng Jia Xin's Project Portfolio Page
 
 ## Project: My Fitness Buddy
 
-My Fitness Buddy is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+My Fitness Buddy is a desktop application that helps PES B pending recruits keep track of their
+ overall change in fitness level by allowing them to add daily records of their weight and calorie input/output. 
 
 Given below are my contributions to the project.
 
@@ -36,30 +37,28 @@ Given below are my contributions to the project.
   * Justification: This feature improves the scope of the product because it enabled another group of target audience to use it.
   * Highlights: This enhancement created more methods to check for unique person before adding more profiles. 
 
-* **Code contributed**: [https://github.com/AY2021S1-CS2103T-W11-3/tp/tree/master]()
+* **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=jiaax)
 
 * **Project management**:
-  * Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+  * Documentation reviewing and check for consistency
 
 * **Enhancements to existing features**:
-  * Updated the GUI color scheme (Pull requests [\#33](), [\#34]())
-  * Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests [\#36](), [\#38]())
+  * Unique identification of person using ID [\#226](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/226)
+  * Consolidation of total calorie input for easier daily reference [\#59](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/59)
+  * Refactoring of AddressBook to MyFitnessBuddy [\#113](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/113)
 
 * **Documentation**:
   * User Guide:
-    * Added documentation for the features `add`, `edit` and `delete` [\#150]()
-    * Did cosmetic tweaks to existing documentation of features `create`: [\#117]()
+    * Added documentation for the features `add`, `edit`, `delete` and `update` 
+    [\#150](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/150) 
+    [\#244](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/244)
+    * Did cosmetic tweaks to existing documentation of features `create`: 
+    [\#117](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/117)
   * Developer Guide:
-    * Added implementation details of the `delete` feature. // tbc
+    * Added implementation details of the `create`, `update` and `login` feature. 
 
 * **Community**:
-  * PRs reviewed (with non-trivial review comments): [\#12](), [\#32](), [\#19](), [\#42]()
-  * Contributed to forum discussions (examples: [1](), [2](), [3](), [4]())
-  * Reported bugs and suggestions for other teams in the class (examples: [1](), [2](), [3]())
-  * Some parts of the history feature I added was adopted by several other class mates ([1](), [2]()) //
+  * Merged numerous documentation PRs 
+  * Documented bugs for other teams during PE Dry run
+  * Reported bugs and suggestions for other teams in the class 
 
-* **Tools**:
-  * Integrated a third party library (Natty) to the project ([\#42]())
-  * Integrated a new Github plugin (CircleCI) to the team repo
-
-* _{you can add/remove categories in the list above}_

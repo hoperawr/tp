@@ -29,8 +29,9 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New day added: %1$s";
     public static final String MESSAGE_DUPLICATE_DAY = "This day already exists in the records.";
-    public static final String MESSAGE_PAST = "Bruh going back in time?";
-    public static final String MESSAGE_FUTURE = "Bruh you travelling through time?";
+    public static final String MESSAGE_PAST = "You are not allowed to add a day record "
+            + "with a date before the current profile is added?";
+    public static final String MESSAGE_FUTURE = "You are not allowed to add any future day record";
     public static final String MESSAGE_NO_LOGIN = "Please login to a profile before adding a new day.";
 
     private final Day toAdd;

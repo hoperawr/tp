@@ -24,10 +24,7 @@ Added additional functionality of allowing users to view calories by clicking on
 * **New Feature**: Double clicking on a DayCard would allow you to view calorie inputs and calorie outputs that particular day.
 Justification: Allows users an additional way to view their daily calories. 
 
-* **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-
-                                         dashboard/#breakdown=true&search=ethanso56&sort=groupTitle&sortWithin=title&since=
-                                         2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs
-                                         ~functional-code~test-code~other) 
+* **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=ethanso56)
 
 * **Enhancements to existing feature**:
     * Refactored Person class to Day class (Pull request: [\#47](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/47))

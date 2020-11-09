@@ -145,6 +145,7 @@ public class MyFitnessBuddy implements ReadOnlyMyFitnessBuddy {
      */
     public void setDay(Day target, Day editedDay) {
         requireNonNull(editedDay);
+        this.currentPerson.setDay(target, editedDay);
         getPerson().setDay(target, editedDay);
     }
 

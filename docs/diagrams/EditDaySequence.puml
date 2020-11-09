@@ -35,7 +35,7 @@ destroy EditCommandParser
 EditCommand -->  MyFitnessBuddyParser
 deactivate EditCommand
 
- MyFitnessBuddyParser --> LogicManager : r
+ MyFitnessBuddyParser --> LogicManager
 deactivate MyFitnessBuddyParser
 
 LogicManager -> EditCommand : execute()

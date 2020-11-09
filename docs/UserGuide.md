@@ -72,7 +72,6 @@ All commands in the following sections follow the same format.
 
 ## 3. Getting Started
 ### 3.1 Downloading and opening the application
-=======
 (Contributed by Jun Hui)
 
 Thank you for using My Fitness Buddy! Here's a quick start guide to get you started.
@@ -274,7 +273,7 @@ _:bulb:TIP: If the `DATE` field is left empty, the calorie input will be added t
 _:warning: The calorie count for the input calorie and the total input calorie for a particular day cannot 
 exceed 2,147,483,647._
 
-![Add_input](images/calorieImages/Add_input.png)
+![Add_input](images/calorieImages/Add_Input.png)
 
 ##### 4.3.1.2 Adding a calorie output : `calorie tp/out`
 Add calorie output to the calorie tracker.
@@ -290,7 +289,7 @@ _:bulb:TIP: If the `DATE` field is left empty, the calorie output will be added 
 _:warning: The calorie count for the output calorie and the total output calorie for a particular day cannot 
 exceed 2,147,483,647._
 
-![Add_input](images/calorieImages/Add_output.png)
+![Add_input](images/calorieImages/Add_Output.png)
 
 Examples:`remove 3 tp/out i/3` 
 #### 4.3.2 Removing Calorie
@@ -596,9 +595,10 @@ viewing that particular day.
 Action | Format
 --------|------------------
 **Create profile** | `create n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT` 
-**Edit profile** | `profile edit n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
+**Update profile** | `update n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
+**Login into a profile** | `login INDEX`
 **Add day record** | `add d/DATE w/WEIGHT` 
-**Edit day record** | `edit INDEX w/WEIGHT`
+**Edit day record** | `edit INDEX w/WEIGHT d/DATE`
 **Delete day record** | `delete INDEX`
 **Add input** | `calorie tp/in t/TIME f/FOOD c/CALORIE_COUNT`
 **Add output** | `calorie tp/out t/TIME d/DURATION c/CALORIE_BURNT`

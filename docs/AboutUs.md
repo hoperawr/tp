@@ -24,7 +24,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/wayne987.png" width="200px">
 
 [[github](http://github.com/wayne987)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/wayne987.md)]
 
 * Role: Developer
 * Responsibilities: Testing
@@ -54,7 +54,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/jiaax.png" width="200px">
 
 [[github](http://github.com/jiaax)]
-[[portfolio](team/johndoe.md)]
+[[portfolio](team/wayne987.md)]
 
 * Role: Developer
 * Responsibilities: Documentation

@@ -7,6 +7,7 @@ title: My Fitness Buddy Developer Guide
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
+
 ## **1. Introduction**
 
 ### 1.1 About the application
@@ -27,8 +28,6 @@ This Developer Guide is for anyone who are interested in the implementation of M
 as well as future developers that are interested in further developing of our application.
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
-
 ## **2. Design**
 
 ### 2.1 Architecture
@@ -189,8 +188,6 @@ JsonAdaptedOutput are JSON adapted classes to convert the specified object into 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
-
 ## **3. Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.

@@ -20,7 +20,6 @@ Choose a topic from the [Table of Contents](#table-of-contents) below.
 {:toc}  
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 ## 1. Introduction
 (Contributed by Hope)  
@@ -39,7 +38,6 @@ We have also implemented a commander's version that would allow commanders to ha
  We hope that through the use of this application, soldiers can take charge of their own fitness and achieve the results they strive for. 
 
 --------------------------------------------------------------------------------------------------------------------
-<div style="page-break-after: always;"></div>
 
 ## 2. About
 (Contributed by Hope)  
@@ -563,6 +561,7 @@ My Fitness Buddy data are saved in the hard disk automatically after any command
 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
+
 ## 5. FAQ
 (Contributed by Ethan)
 
@@ -596,6 +595,7 @@ the lists will not show anything. The status bar will still update informing you
 viewing that particular day. 
 --------------------------------------------------------------------------------------------------------------------
 <div style="page-break-after: always;"></div>
+
 ## 6. Command summary
 (Contributed by Ethan)
 

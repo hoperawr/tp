@@ -14,13 +14,11 @@ Given below are my contributions to the project.
   * What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
   * Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
   * Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-  * Credits: *{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}*
 
 * **New Feature**: Added the ability to create a new person object.
   * What it does: allows the user to create a new person with an empty records and a profile.
   * Justification: This feature improves the product significantly because a user can now have a unique set of data that belongs to him/her only. 
   * Highlights: This enhancement affects the number of users our product can accommodate, and the ability to display multiple user information on the same interface. The implementation was tedious as it required new methods to check for unique persons.
-  * Credits: *{the idea of person class came from Address Book Level 3}*
 
 * **New Feature**: Added the ability to create a new profile.
   * What it does: allows the user to create a new profile that stores the relevant name, unique identity number, height and target weight of a user.

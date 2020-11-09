@@ -472,7 +472,9 @@ public class MainWindow extends UiPart<Stage> {
                 handleCommanderStats();
             }
 
-            handleUpdateProfilePanel();
+            if (!commandResult.isClear()) {
+                handleUpdateProfilePanel();
+            }
 
             return commandResult;
         } catch (CommandException | ParseException e) {

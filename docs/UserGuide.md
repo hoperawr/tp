@@ -373,9 +373,9 @@ Examples:`change 3 tp/out i/3 c/123`
 
 Change a calorie out entry with details recorded wrongly
 
-Format: `change d/DATE tp/in i/INDEX [Updated Details]`
+Format: `change d/DATE tp/out i/INDEX [Updated Details]`
 
-Examples:`change d/2020-10-26 tp/in i/2 c/123` 
+Examples:`change d/2020-10-26 tp/out i/2 c/123` 
 
 Meaning:`change the calorie count of an Output calorie in the October 26 2020 log ,with the index of 2 in the
 output list to 123` 
@@ -602,17 +602,17 @@ viewing that particular day.
 Action | Format
 --------|------------------
 **Create profile** | `create n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT` 
-**Update profile** | `update n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
+**Update profile** | `update [optional] n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
 **Login into a profile** | `login INDEX`
 **Add day record** | `add d/DATE w/WEIGHT` 
 **Edit day record** | `edit INDEX w/WEIGHT d/DATE`
 **Delete day record** | `delete INDEX`
 **Add input** | `calorie tp/in t/TIME f/FOOD c/CALORIE_COUNT`
-**Add output** | `calorie tp/out t/TIME d/DURATION c/CALORIE_BURNT`
+**Add output** | `calorie tp/out t/TIME e/EXERCISE c/CALORIE_BURNT`
 **Remove input** | `remove tp/in d/DATE i/INDEX` 
 **Remove output** | `remove tp/out d/DATE i/INDEX` 
-**Change input** | `change tp/in t/TIME f/FOOD c/CALORIE_COUNT`
-**Change output** | `change tp/out t/TIME d/DURATION c/CALORIE_BURNT` 
+**Change input** | `change d/DATE tp/in i/INDEX [Updated Details]`
+**Change output** | `change d/DATE tp/out i/INDEX [Updated Details` 
 **View calories of a day** | `view INDEX`
 **View statistics** | `stats v/CHART_TO_BE_VIEWED`
 **View overall BMI progress of recruits for commanders** | `stats v/commander`

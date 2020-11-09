@@ -58,9 +58,11 @@ activate ModelManager
 ModelManager -> Person : getDay()
 activate Person
 
-Person -> Day : getCalorieManager()
-activate Day
+Person --> ModelManager
+deactivate Person
 
+ModelManager -> Day : getCalorieManager()
+activate Day
 Day -> CalorieManager : add()
 activate CalorieManager
 

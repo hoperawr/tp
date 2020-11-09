@@ -1,0 +1,82 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MyFitnessBuddyParser" as MyFitnessBuddyParser LOGIC_COLOR
+participant ":UpdateCommandParser" as UpdateCommandParser LOGIC_COLOR
+participant "u:UpdateCommand" as UpdateCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+end box
+[-> LogicManager : execute("update n/Jonny")
+activate LogicManager
+
+LogicManager -> MyFitnessBuddyParser : parseCommand("update n/Jonny")
+activate  MyFitnessBuddyParser
+
+create UpdateCommandParser
+MyFitnessBuddyParser -> UpdateCommandParser
+activate UpdateCommandParser
+
+UpdateCommandParser --> MyFitnessBuddyParser
+deactivate UpdateCommandParser
+
+MyFitnessBuddyParser -> UpdateCommandParser : parse("n/Jonny")
+activate UpdateCommandParser
+
+create UpdateCommand
+UpdateCommandParser -> UpdateCommand
+activate UpdateCommand
+
+UpdateCommand --> UpdateCommandParser : u
+deactivate UpdateCommand
+
+UpdateCommandParser --> MyFitnessBuddyParser : u
+deactivate UpdateCommandParser
+
+UpdateCommandParser -[hidden]-> MyFitnessBuddyParser
+destroy UpdateCommandParser
+
+MyFitnessBuddyParser --> LogicManager
+deactivate MyFitnessBuddyParser
+
+LogicManager -> UpdateCommand : execute()
+activate UpdateCommand
+
+UpdateCommand -> Model : getProfile()
+activate Model
+
+Model -> Person : getProfile()
+activate Person
+
+Person --> Model
+deactivate Person
+
+Model --> Person : setProfile(Profile)
+activate Person
+
+Person --> Model
+deactivate Person
+
+Model --> UpdateCommand
+deactivate Model
+
+create CommandResult
+UpdateCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> UpdateCommand
+deactivate CommandResult
+
+UpdateCommand --> LogicManager : result
+deactivate UpdateCommand
+
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

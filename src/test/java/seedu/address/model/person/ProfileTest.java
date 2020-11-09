@@ -12,8 +12,8 @@ class ProfileTest {
     private Name name = new Name("jon");
     private ID id = new ID("1219");
     private Height height = new Height("170");
-    private Weight targetWeight = new Weight("70");
-    private Profile profile = new Profile(name, id, height, targetWeight);
+    private Weight startingWeight = new Weight("70");
+    private Profile profile = new Profile(name, id, height, startingWeight);
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -42,13 +42,13 @@ class ProfileTest {
     }
 
     @Test
-    void getTargetWeight() {
-        assertTrue(targetWeight.equals(profile.getTargetWeight()));
+    void getStartingtWeight() {
+        assertTrue(startingWeight.equals(profile.getStartingWeight()));
     }
 
     @Test
     void testEquals() {
-        assertTrue(profile.equals(new Profile(name, id, height, targetWeight)));
-        assertFalse(profile.equals(targetWeight));
+        assertTrue(profile.equals(new Profile(name, id, height, startingWeight)));
+        assertFalse(profile.equals(startingWeight));
     }
 }

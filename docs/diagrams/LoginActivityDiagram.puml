@@ -1,0 +1,10 @@
+@startuml
+start
+:User executes command to view another profile;
+:Parses specified index;
+:Retrieves person at specified index from uniquePersonList in MyFitnessBuddy;
+:Sets currentPerson in MyFitnessBuddy to the retrieved person;
+:Updates profile and uniqueDayList to be viewed;
+
+stop
+@enduml

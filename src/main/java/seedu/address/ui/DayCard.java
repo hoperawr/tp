@@ -54,7 +54,7 @@ public class DayCard extends UiPart<Region> {
     private ProgressBar progress;
 
     private Image cross = new Image(this.getClass().getResourceAsStream("/images/Cross.png"));
-    private Image tick = new Image(this.getClass().getResourceAsStream("/images/tick.png"));
+    private Image tick = new Image(this.getClass().getResourceAsStream("/images/Tick.png"));
 
     /**
      * Creates a {@code DayCard} with the given {@code Day} and index to display and the given {@code MainWindow}.

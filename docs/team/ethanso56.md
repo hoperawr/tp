@@ -24,10 +24,7 @@ Added additional functionality of allowing users to view calories by clicking on
 * **New Feature**: Double clicking on a DayCard would allow you to view calorie inputs and calorie outputs that particular day.
 Justification: Allows users an additional way to view their daily calories. 
 
-* **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-
-                                         dashboard/#breakdown=true&search=ethanso56&sort=groupTitle&sortWithin=title&since=
-                                         2020-08-14&timeframe=commit&mergegroup=&groupSelect=groupByRepos&checkedFileTypes=docs
-                                         ~functional-code~test-code~other) 
+* **Code contributed**: [RepoSense link](https://nus-cs2103-ay2021s1.github.io/tp-dashboard/#breakdown=true&search=ethanso56)
 
 * **Enhancements to existing feature**:
     * Refactored Person class to Day class (Pull request: [\#47](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/47))
@@ -38,11 +35,11 @@ Justification: Allows users an additional way to view their daily calories.
 * **Documentation**:
     * User Guide:
         * Added documentation for the feature `view` (Pull request: [\#156](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/156))
-        * Edited sections: Introduction and General Commands (Pull request: [\#129](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/129))
+        * Edited sections: Introduction, FAQ and General Commands (Pull request: [\#129](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/129))
     * Developer Guide:
         * Added use cases and user stories (Pull request: [\#28](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/28))
-        * Added the implementation of the View all calorie inputs and outputs of a day feature (Pull request: [\#101](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/101))
-        * Edited sections: Purpose, audience and UI components (Pull request: [\#101](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/101))
+        * Added the implementation of the Edit day and View all calorie inputs and outputs of a day feature (Pull request: [\#101](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/101))
+        * Edited sections: Purpose, audience, UI components, Instructions for manual testing (Pull request: [\#101](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/101))
             
 * **Community**:
     * PRs reviewed (with non-trival comments):
@@ -64,5 +61,7 @@ Justification: Allows users an additional way to view their daily calories.
     [\#222](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/222)
     [\#224](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/224)
     [\#225](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/225)
+    [\#243](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/243)
+
    
 

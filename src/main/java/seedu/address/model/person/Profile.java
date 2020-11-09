@@ -16,7 +16,7 @@ public class Profile {
 
     // data fields
     public final Height height;
-    private Weight targetWeight;
+    private Weight startingWeight;
     private final int age = 20;
 
     private Date startingDate;
@@ -24,23 +24,23 @@ public class Profile {
     /**
      * Creates a profile.
      */
-    public Profile(Name name, ID id, Height height, Weight targetWeight) {
-        requireAllNonNull(name, id, height, targetWeight);
+    public Profile(Name name, ID id, Height height, Weight startingWeight) {
+        requireAllNonNull(name, id, height, startingWeight);
         this.name = name;
         this.id = id;
         this.height = height;
-        this.targetWeight = targetWeight;
+        this.startingWeight = startingWeight;
     }
 
     /**
      * Creates a profile with the option to indicate starting date for storage.
      */
-    public Profile(Name name, ID id, Height height, Weight targetWeight, Date date) {
-        requireAllNonNull(name, id, height, targetWeight);
+    public Profile(Name name, ID id, Height height, Weight startingWeight, Date date) {
+        requireAllNonNull(name, id, height, startingWeight);
         this.name = name;
         this.id = id;
         this.height = height;
-        this.targetWeight = targetWeight;
+        this.startingWeight = startingWeight;
         this.startingDate = date;
     }
 
@@ -57,8 +57,8 @@ public class Profile {
         return height;
     }
 
-    public Weight getTargetWeight() {
-        return targetWeight;
+    public Weight getStartingWeight() {
+        return startingWeight;
     }
 
     public int getAge() {
@@ -90,7 +90,7 @@ public class Profile {
         return otherProfile.getId().equals(getId())
                 && otherProfile.getName().equals(getName())
                 && otherProfile.getHeight().equals(getHeight())
-                && otherProfile.getTargetWeight().equals(getTargetWeight());
+                && otherProfile.getStartingWeight().equals(getStartingWeight());
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Profile {
                 .append(" Height: ")
                 .append(getHeight())
                 .append(" Target Weight: ")
-                .append(getTargetWeight());
+                .append(getStartingWeight());
         return builder.toString();
     }
 

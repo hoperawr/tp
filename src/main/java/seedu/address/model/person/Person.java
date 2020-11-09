@@ -150,7 +150,7 @@ public class Person {
         assert day != null;
         day.setAge(this.age);
         day.setHeight(profile.height);
-        day.setStartingWeight(profile.getTargetWeight());
+        day.setStartingWeight(profile.getStartingWeight());
         days.add(day);
     }
 
@@ -236,7 +236,7 @@ public class Person {
         List<Day> list = days.asUnmodifiableObservableList();
         int size = list.size();
         if (size == 0) {
-            return Bmi.calculateBmi(profile.height, profile.getTargetWeight());
+            return Bmi.calculateBmi(profile.height, profile.getStartingWeight());
         } else {
             Day currentDay = list.get(size - 1);
             Weight currentWeight = currentDay.getWeight();
@@ -250,7 +250,7 @@ public class Person {
      */
     public double getProgress() {
         double currentBmi = getCurrentBmi();
-        double startBmi = Bmi.calculateBmi(profile.getHeight(), profile.getTargetWeight());
+        double startBmi = Bmi.calculateBmi(profile.getHeight(), profile.getStartingWeight());
         double endBmi = 22.5;
         double totalBmiToChange = startBmi - endBmi;
         double differenceWithEnd = currentBmi - endBmi;

@@ -5,7 +5,7 @@ title: Jun Hui's Project Portfolio Page
 
 ## Project: My Fitness Buddy
 
-My Fitness Buddy is My Fitness Buddy is a desktop application that helps PES B pending recruits keep track of their
+My Fitness Buddy is a desktop application that helps PES B pending recruits keep track of their
 overall change in fitness level by allowing them to add daily records of their weight and calorie input/output.  
 
 Given below are my contributions to the project.
@@ -51,7 +51,8 @@ their profile such as weight, height, BMI and ID.
   * Managed releases `v1.3.trial` - `v1.4` (3 releases) on GitHub.
   * Various Bug Fixes (Pull Requests: [\#119](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/119), [\#219](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/219),
   [\#161](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/161), [\#124](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/124), [\#234](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/234),
-  [\#246](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/246))
+  [\#246](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/246), [\#263](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/263)
+  [\#267](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/267), [\#268](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/268))
   * General housekeeping tasks - Edited AboutUs, README, index.md, GitHub Workflows (Pull Requests: [\#36](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/36), [\#35](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/35),
      [\#23](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/23), [\#240](https://github.com/AY2021S1-CS2103T-W11-3/tp/pull/240))
   

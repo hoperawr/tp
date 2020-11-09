@@ -1,0 +1,88 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MyFitnessBuddyParser" as MyFitnessBuddyParser LOGIC_COLOR
+participant ":EditCommandParser" as EditCommandParser LOGIC_COLOR
+participant ":EditCommand" as EditCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":MyFitnessBuddy" as MyFitnessBuddy MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+participant ":UniqueDayList" as UniqueDayList MODEL_COLOR
+end box
+[-> LogicManager : execute("edit 1 d/2020-11-08 w/90")
+activate LogicManager
+
+LogicManager -> MyFitnessBuddyParser : parseCommand("edit 1 d/2020-11-08 w/90")
+activate  MyFitnessBuddyParser
+
+create EditCommandParser
+MyFitnessBuddyParser -> EditCommandParser : parse("1 d/2020-11-08 w/90")
+activate EditCommandParser
+
+create EditCommand
+EditCommandParser -> EditCommand
+activate EditCommand
+
+deactivate EditCommandParser
+destroy EditCommandParser
+
+EditCommand -->  MyFitnessBuddyParser
+deactivate EditCommand
+
+ MyFitnessBuddyParser --> LogicManager
+deactivate MyFitnessBuddyParser
+
+LogicManager -> EditCommand : execute()
+activate EditCommand
+
+EditCommand -> EditCommand : createEditedDay()
+activate EditCommand
+EditCommand -> EditCommand
+deactivate EditCommand
+
+EditCommand -> Model : setDay()
+activate Model
+
+Model -> MyFitnessBuddy : setDay()
+activate MyFitnessBuddy
+
+MyFitnessBuddy -> Person : setDay()
+activate Person
+
+Person --> UniqueDayList : setDay()
+activate UniqueDayList
+
+UniqueDayList --> Person
+deactivate UniqueDayList
+
+Person --> MyFitnessBuddy
+deactivate Person
+
+MyFitnessBuddy --> Model
+deactivate MyFitnessBuddy
+
+Model --> EditCommand
+deactivate Model
+
+create CommandResult
+EditCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> EditCommand
+deactivate CommandResult
+
+EditCommand --> LogicManager : result
+deactivate EditCommand
+EditCommand -[hidden]-> LogicManager : result
+destroy EditCommand
+destroy CommandResult
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

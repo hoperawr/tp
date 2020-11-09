@@ -9,7 +9,6 @@ import seedu.address.model.calorie.Food;
 import seedu.address.model.calorie.Input;
 import seedu.address.model.calorie.Time;
 
-
 /**
  * Jackson-friendly version of {@link seedu.address.model.calorie.Input}.
  */

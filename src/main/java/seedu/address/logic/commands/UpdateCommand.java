@@ -58,7 +58,7 @@ public class UpdateCommand extends Command {
     }
 
     /**
-     * checks if the id intended to be change is taken
+     * checks if the id intended to be changed is taken
      */
     public boolean isUnique(ID id, ObservableList<Person> ul) {
         return ul.size() == 0 || ul.stream().noneMatch(x -> x.getProfile().getId().value.equals(id.value));
@@ -95,7 +95,7 @@ public class UpdateCommand extends Command {
         Name updatedName = updateProfileDescriptor.getName().orElse(profileToEdit.getName());
         ID updatedID = updateProfileDescriptor.getId().orElse(profileToEdit.getId());
         Height updatedHeight = updateProfileDescriptor.getHeight().orElse(profileToEdit.getHeight());
-        Weight updatedTargetWeight = updateProfileDescriptor.getWeight().orElse(profileToEdit.getTargetWeight());
+        Weight updatedTargetWeight = updateProfileDescriptor.getWeight().orElse(profileToEdit.getStartingWeight());
 
         return new Profile(updatedName, updatedID, updatedHeight, updatedTargetWeight);
     }

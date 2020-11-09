@@ -27,7 +27,7 @@ public class UpdateProfileDescriptorBuilder {
         descriptor.setName(profile.getName());
         descriptor.setId(profile.getId());
         descriptor.setHeight(profile.getHeight());
-        descriptor.setWeight(profile.getTargetWeight());
+        descriptor.setWeight(profile.getStartingWeight());
     }
 
     /**

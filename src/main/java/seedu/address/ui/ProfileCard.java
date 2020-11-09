@@ -32,7 +32,7 @@ public class ProfileCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
-    private Label targetWeight;
+    private Label startingWeight;
     @FXML
     private Label height;
     @FXML
@@ -61,7 +61,7 @@ public class ProfileCard extends UiPart<Region> {
             name.setText(profile.getName().toString());
         }
         id.setText("ID: " + profile.getId().toString());
-        targetWeight.setText("Target Weight: " + profile.getTargetWeight().toString());
+        startingWeight.setText("Starting Weight: " + profile.getStartingWeight().toString());
         height.setText("Height: " + profile.getHeight().toString());
         String path = "/images/ProfilePicture/" + profile.getId().toString() + ".png";
         try {
@@ -92,7 +92,7 @@ public class ProfileCard extends UiPart<Region> {
         name.setText(profile.getName().toString());
         name.setTranslateX(-5);
         id.setText("ID: " + profile.getId().toString());
-        targetWeight.setText("Target Weight: " + profile.getTargetWeight().toString());
+        startingWeight.setText("Starting Weight: " + profile.getStartingWeight().toString());
         height.setText("Height: " + profile.getHeight().toString());
         String path = "/images/ProfilePicture/" + profile.getId().toString() + ".png";
         try {

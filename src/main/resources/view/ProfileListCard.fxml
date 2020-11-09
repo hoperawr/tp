@@ -32,7 +32,7 @@
                 <Label fx:id="name" styleClass="cell_big_label" text="\$name" />
             </HBox>
             <Label fx:id="id" styleClass="cell_small_label" text="\$id" />
-            <Label fx:id="targetWeight" styleClass="cell_small_label" text="\$targetWeight" />
+            <Label fx:id="startingWeight" styleClass="cell_small_label" text="\$startingWeight" />
             <Label fx:id="height" styleClass="cell_small_label" text="\$height" />
             <ProgressBar fx:id="progress" />
             </VBox>

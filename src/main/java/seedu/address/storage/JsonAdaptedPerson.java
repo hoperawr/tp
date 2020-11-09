@@ -25,7 +25,7 @@ class JsonAdaptedPerson {
 
 
     /**
-     * Constructs a {@code JsonAdaptedPerson} with the given day details.
+     * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("profile") JsonAdaptedProfile profile,

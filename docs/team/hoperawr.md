@@ -31,7 +31,7 @@ Given below are my contributions to the project.
   * User Guide:
     * Changed existing User Guide to fit v1.2 of our application [\#33]()
     * Edited the Introduction, Application Overview, Target Audience, Rationale, About, Using his User Guide
-     , Symbols and Syntax and Command Format. Also created a logo for the application. (Pull requests [\#106](), [\#153](), [\#247](), [\#252]())
+     , Symbols and Syntax and Command Format. Also created a logo for the application. (Pull requests [\#106](), [\#153](), [\#247](), [\#252]())  
   * Developer Guide:
     * Added implementation details of the Storage package in Developer Guide.
     * Added the details of CalorieCommand to the list of features which includes the creation of two diagrams [\#262]()
@@ -40,4 +40,3 @@ Given below are my contributions to the project.
   * Handle the organisation and delegation of duties within the team.
   * Merged numerous PRS
   * Documented bugs for other teams during PE
-

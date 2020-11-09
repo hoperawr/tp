@@ -14,10 +14,6 @@ import seedu.address.model.calorie.CalorieManager;
 import seedu.address.model.calorie.Input;
 import seedu.address.model.calorie.Output;
 
-
-
-
-
 /**
  * Jackson-friendly version of {@link seedu.address.model.calorie.CalorieManager}.
  */

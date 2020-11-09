@@ -70,6 +70,7 @@ public class EditCommand extends Command {
 
         model.setDay(dayToEdit, editedDay);
         model.updateFilteredDayList(PREDICATE_SHOW_ALL_DAYS);
+
         return new CommandResult(String.format(MESSAGE_EDIT_DAY_SUCCESS, editedDay));
     }
 

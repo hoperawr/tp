@@ -22,21 +22,20 @@ class JsonAdaptedProfile {
     private final String name;
     private final String id;
     private final String height;
-    private final String targetWeight;
+    private final String startingWeight;
     private final String startingDate;
 
-
     /**
-     * Constructs a {@code JsonAdaptedProfile} with the given day details.
+     * Constructs a {@code JsonAdaptedProfile} with the given profile details.
      */
     @JsonCreator
     public JsonAdaptedProfile(@JsonProperty("name") String name, @JsonProperty("id") String id,
-                          @JsonProperty("height") String height, @JsonProperty("targetWeight") String targetWeight,
+                          @JsonProperty("height") String height, @JsonProperty("targetWeight") String startingWeight,
                         @JsonProperty("startingDate") String startingDate) {
         this.name = name;
         this.id = id;
         this.height = height;
-        this.targetWeight = targetWeight;
+        this.startingWeight = startingWeight;
         this.startingDate = startingDate;
     }
 
@@ -47,14 +46,14 @@ class JsonAdaptedProfile {
         name = source.getName().fullName;
         id = source.getId().value;
         height = source.getHeight().value;
-        targetWeight = source.getTargetWeight().value;
+        startingWeight = source.getStartingWeight().value;
         startingDate = source.getStartDate().value;
     }
 
     /**
      * Converts this Jackson-friendly adapted profile object into the model's {@code Profile} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted day.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted Profile.
      */
     public Profile toModelType() throws IllegalValueException {
         if (name == null) {
@@ -81,13 +80,13 @@ class JsonAdaptedProfile {
         }
         final Height modelHeight = new Height(height);
 
-        if (targetWeight == null) {
+        if (startingWeight == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Weight.class.getSimpleName()));
         }
-        if (!Weight.isValidWeight(targetWeight)) {
+        if (!Weight.isValidWeight(startingWeight)) {
             throw new IllegalValueException(Weight.MESSAGE_CONSTRAINTS);
         }
-        final Weight modelWeight = new Weight(targetWeight);
+        final Weight modelWeight = new Weight(startingWeight);
 
         if (startingDate == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName()));

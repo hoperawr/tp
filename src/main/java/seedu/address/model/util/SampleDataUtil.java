@@ -117,7 +117,7 @@ public class SampleDataUtil {
         for (Day day : dayList) {
             day.setAge(sampleProfile.getAge());
             day.setHeight(sampleProfile.getHeight());
-            day.setStartingWeight(sampleProfile.getTargetWeight());
+            day.setStartingWeight(sampleProfile.getStartingWeight());
         }
         return dayList;
     }

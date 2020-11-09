@@ -1,0 +1,84 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":MyFitnessBuddyParser" as MyFitnessBuddyParser LOGIC_COLOR
+participant ":CreateCommandParser" as CreateCommandParser LOGIC_COLOR
+participant "c:CreateCommand" as CreateCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+participant ":UniquePersonList" as UniquePersonList MODEL_COLOR
+end box
+[-> LogicManager : execute("create n/Jon id/1220 h/170 w/68")
+activate LogicManager
+
+LogicManager -> MyFitnessBuddyParser : parseCommand("create n/Jon id/1220 h/170 w/68")
+activate  MyFitnessBuddyParser
+
+create CreateCommandParser
+MyFitnessBuddyParser -> CreateCommandParser
+activate CreateCommandParser
+
+CreateCommandParser --> MyFitnessBuddyParser
+deactivate CreateCommandParser
+
+MyFitnessBuddyParser -> CreateCommandParser : parse("n/Jon id/1220 h/170 w/68")
+activate CreateCommandParser
+
+create CreateCommand
+CreateCommandParser -> CreateCommand
+activate CreateCommand
+
+CreateCommand --> CreateCommandParser : c
+deactivate CreateCommand
+
+CreateCommandParser --> MyFitnessBuddyParser : c
+deactivate CreateCommandParser
+
+CreateCommandParser -[hidden]-> MyFitnessBuddyParser
+destroy CreateCommandParser
+
+MyFitnessBuddyParser --> LogicManager
+deactivate MyFitnessBuddyParser
+
+LogicManager -> CreateCommand : execute()
+activate CreateCommand
+
+CreateCommand -> Model : addPerson(Person)
+activate Model
+
+Model -> Person : addPerson(Person)
+activate Person
+
+Person -> UniquePersonList : add(Person)
+activate UniquePersonList
+
+
+UniquePersonList --> Person
+deactivate UniquePersonList
+
+Person --> Model
+deactivate Person
+
+Model --> CreateCommand
+deactivate Model
+
+create CommandResult
+CreateCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> CreateCommand
+deactivate CommandResult
+
+CreateCommand --> LogicManager : result
+deactivate CreateCommand
+
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

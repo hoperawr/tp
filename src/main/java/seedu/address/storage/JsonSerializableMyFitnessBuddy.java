@@ -42,7 +42,7 @@ class JsonSerializableMyFitnessBuddy {
     }
 
     /**
-     * Converts this address book into the model's {@code MyFitnessBuddy} object.
+     * Converts this My Fitness Buddy into the model's {@code MyFitnessBuddy} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */

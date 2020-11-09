@@ -47,8 +47,7 @@ This User Guide has been structured such that users can easily find and understa
 * List of days
 * Calorie input and output
 * Statistics
-
-[Section 5](#5-??) consists the commands and features available in the commander's mode.
+* Features for commanders
 
 ### 2.2 Symbols and Syntax
 
@@ -73,7 +72,6 @@ All commands in the following sections follow the same format.
 
 ## 3. Getting Started
 ### 3.1 Downloading and opening the application
-=======
 (Contributed by Jun Hui)
 
 Thank you for using My Fitness Buddy! Here's a quick start guide to get you started.
@@ -99,15 +97,15 @@ When you open our application for the first time, the application starts up with
 are some general usage scenarios of our application that you can try when getting started
 * From sample data :
 1. `login 1` : Login to the first profile in the list
-1. `add d/2020-10-16 w/70` : Create a daily record with the specified date and weight.
+1. `add d/2020-10-26 w/70` : Create a daily record with the specified date and weight.
 1. `calorie d/2020-10-26 tp/in t/1200 f/laksa c/290` : Adds a calorie input entry with the specified date.
 1. `stats v/all` : View both calorie and weight charts in a pop-up window.
 1. `login 2` : Login to the second profile in the list  
 
 * After `clear` command :
 1. `create n/John id/1201 h/170 w/68` : Create a new profile with the specified information
-1. `add d/2020-10-16 w/70` : Create a daily record with the specified date and weight.
-1. `calorie d/2020-10-26 tp/out t/1200 e/Run c/290` : Adds a calorie input entry with the specified date.
+1. `add d/2020-10-26 w/70` : Create a daily record with the specified date and weight.
+1. `calorie d/2020-10-26 tp/out t/1230 e/Run c/100` : Adds a calorie input entry with the specified date.
 1. `stats v/all` View both calorie and weight charts in a pop-up window.
 
 Head to [Features](#4-features) below to learn more details of each command. 
@@ -128,47 +126,58 @@ Head to [Features](#4-features) below to learn more details of each command.
 
 
 ### 4.1 Profile commands
+(Contributed by Jia Xin)
 
 Commands in this section are useful for allowing multiple users to use this app. 
 Multiple users can create their own profiles and add their own records to it.  
 
-#### 4.1.1 Creating a new profile : `create`
+#### 4.1.1 Creating a new Person : `create`
 Create a new profile for a new Person.
 
-Format: `create n/NAME id/ID_NUM h/HEIGHT w/TARGET_WEIGHT`
+Format: `create n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
+- `HEIGHT` should be in CM.
+- `STARTING_WEIGHT` should be in KG.
 
-:warning: For valid ID_NUM, the first two digits must be from 1 - 4, 
-while the last two digits must be from 1 - 20. A valid ID_NUM has only four digits. 
-
+_:warning: For valid ID_NUM, the first two digits must be from 1 - 4, 
+while the last two digits must be from 1 - 20. A valid ID_NUM has only four digits._
 
 Examples:  
 `create n/Johnny id/1220 h/170 w/68` 
 
-Meaning: create a new profile with name Johnny, ID number 1220, height 170cm and target weight of 68kg.
+Meaning: `create a new profile with name Johnny, ID number 1220, height 170cm and starting weight of 68kg`
 
-#### 4.1.2 Editing an existing profile: `update`
-update an existing profile.
+![CreateProfile](images/CreateProfile.png)
 
-Format: `update [optional] n/NAME id/ID_NUM h/HEIGHT w/TARGET_WEIGHT`
+#### 4.1.2 Updating an existing profile: `update`
+Updates the currently selected profile.
+
+Format: `update [optional] n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
+
+_:warning: Must update at least one of the field and it cannot be the same as the current one._
+_:warning: While there can be 2 persons of the same name, ID changed should be unique and not the same as any other person's ID_
 
 Examples:
-`update n/Jonhhy`
+`update n/Johnny`
 
 Meaning:`update the name of current profile that you are looking to Johnny`
 
-Warning:`must update at least one of the field and it cannot be the same as the current one`
+![UpdateProfile](images/UpdateProfile.png)
 
-#### 4.1.3 viewing another profile: `login`
-Changes the profile that you are currently looking at to another profile
+#### 4.1.3 Viewing another profile: `login`
+Changes the profile that you are currently looking at to another profile.
 
-Format: `update [index]`
+Format: `login INDEX`
 
 Examples:
-`login 2`
+`login 3`
 
-Meaning:`changes the current profile that you are looking at to the profile in the profile list with an index of 2`
+Meaning:`changes the current profile that you are looking at to the profile in the profile list at index 3`
+
+![LoginProfile](images/LoginProfile.png)
 
 ### 4.2 Day commands
+(Contributed by Jia Xin)
+
 Commands in this section are useful in tracking of daily weight records. You should use these commands to log your weight for 
 a new day before adding calorie related information and edit your weight if you made a mistake. 
 
@@ -176,42 +185,43 @@ a new day before adding calorie related information and edit your weight if you 
 Adds a new daily weight record.
 
 Format: `add d/DATE w/WEIGHT`
+- `DATE` has to be in the YYYY-MM-DD format
+- `WEIGHT` should be in KG
 
 Example:  
-`add d/2020-10-29 w/72` 
+`add d/2020-11-09 w/78` 
 
-Meaning:
-Adds a new day, 29 October 2020, with a weight of 72kg.
+Meaning:`adds a new day, 09 November 2020, with a weight of 78kg`
 
-_TIP: Always add a day before adding a calorie information. `DATE` has to be in the YYYY-MM-DD format._
+_:warning: Always add a day before adding a calorie information._
 
 ![AddDay](images/AddDay.png)
 
 #### 4.2.2 Editing a daily weight record : `edit INDEX w/WEIGHT`
 Edits a daily weight record.
 
-Format: `edit INDEX w/WEIGHT`
+Format: `edit INDEX [optional] w/WEIGHT d/DATE`
+- `WEIGHT` should be in KG
+- `DATE` should be in the YYYY-MM-DD format
+
+_:tip:TIP You can choose to update both `DATE` and `WEIGHT` in any order but at least one field needs to be filled_
 
 Example:  
-`edit 3 w/70` 
+`edit 3 w/77` 
 
-Meaning:
-Edits a day at index 3 with a new weight of 70kg.
-
-_TIP: `WEIGHT` should be in KG._
+Meaning: `edits a day at index 3 with a new weight of 77kg`
 
 ![EditDay](images/EditDay.png)
 
 #### 4.2.3 Deleting a daily record: `delete INDEX`
-Deletes a daily record at INDEX.
+Deletes a daily record at the index specified.
 
 Format: `delete INDEX`
 
 Example:
 `delete 2`
 
-Meaning:
-Deletes a day at index 2.
+Meaning: `deletes a day at index 2`
 
 ![DeleteDay](images/DeleteDay.png)
 
@@ -258,12 +268,12 @@ Examples:`calorie d/2020-10-26 tp/in t/1200 f/laksa c/290`
 
 Meaning:`The user ate laksa with the calorie count of 290kcal at 12pm on the date October 26 2020` 
 
-_TIP: If the `DATE` field is left empty, the calorie input will be added to the current date entry._
+_:bulb:TIP: If the `DATE` field is left empty, the calorie input will be added to the current date entry._
 
-:warning: The calorie count for the input calorie and the total input calorie for a particular day cannot 
-exceed 2,147,483,647.
+_:warning: The calorie count for the input calorie and the total input calorie for a particular day cannot 
+exceed 2,147,483,647._
 
-![Add_input](images/calorieImages/Add_input.png)
+![Add_input](images/calorieImages/Add_Input.png)
 
 ##### 4.3.1.2 Adding a calorie output : `calorie tp/out`
 Add calorie output to the calorie tracker.
@@ -274,12 +284,12 @@ Examples:`calorie d/2020-10-26 tp/in t/1200 e/running c/400`
 
 Meaning:`The user ran on October 26 2020 at 12pm and has expanded 400kcal` 
 
-_TIP: If the `DATE` field is left empty, the calorie output will be added to the current date entry._
+_:bulb:TIP: If the `DATE` field is left empty, the calorie output will be added to the current date entry._
 
-:warning: The calorie count for the output calorie and the total output calorie for a particular day cannot 
-exceed 2,147,483,647.
+_:warning: The calorie count for the output calorie and the total output calorie for a particular day cannot 
+exceed 2,147,483,647._
 
-![Add_input](images/calorieImages/Add_output.png)
+![Add_input](images/calorieImages/Add_Output.png)
 
 Examples:`remove 3 tp/out i/3` 
 #### 4.3.2 Removing Calorie
@@ -294,11 +304,11 @@ Examples:`remove tp/in d/2020-10-26 i/3`
 Meaning:`Remove a calorie output from October 26 2020 calorie log, which is the 3rd calorie output in the list of
 Output calories for that day.` 
 
-_TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
+_:bulb:TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
 can be used instead_
 
-:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
-number of records for each category
+_:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
+number of records for each category_
 
 `Before removing`
 ![remove_output_before](images/calorieImages/remove_output_before.png)
@@ -316,11 +326,11 @@ Examples:`remove tp/in d/2020-10-26 i/3`
 Meaning:`Remove a calorie input from October 26 2020 calorie log, which is the 3rd calorie input in the list of
 Input calories for that day.` 
 
-_TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
+_:bulb:TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
 can be used instead_
 
-:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
-number of records for each category
+_:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
+number of records for each category_
 
 The process of removing a calorie input is similar to removing calorie output. Refer to section 4.3.2.1 for a pictorial
 representation.
@@ -344,13 +354,13 @@ input list to 123`
 ![change_after](images/calorieImages/change_after.png)
 
 
-_TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
+_:bulb:TIP: Instead of using d/DATE to specify the date of the log, in which the calorie belongs too, the index of the date
 can be used instead_
 
-:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
-number of records for each category
+_:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
+number of records for each category._
 
-:warning: Calorie Count must be a positive integer and cannot exceed 2,147,483,647.
+_:warning: Calorie Count must be a positive integer and cannot exceed 2,147,483,647._
 
 Examples:`change 3 tp/out i/3 c/123`
 
@@ -368,13 +378,13 @@ output list to 123`
 The process of changing a calorie output is similar to changing a calorie input. Refer to section 4.3.23.1 for a pictorial
 representation.
 
-_TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
+_:bulb:TIP: Instead of using d/DATE to specify the date of the log in which the calorie belongs too, the index of the date
 can be used instead_
 
-:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
-number of records for each category
+_:warning: The index to indicate both the day and calorie must be a positive integer and it cannot exceed the respective 
+number of records for each category_
 
-:warning: Calorie Count must be a positive integer and cannot exceed 2,147,483,647.
+_:warning: Calorie Count must be a positive integer and cannot exceed 2,147,483,647._
 
 ### 4.4 Data Visualization
 (Contributed by Jun Hui)
@@ -401,9 +411,9 @@ Main screen after a view command is used:
 
 ![day_after_view](images/dayAfterView.png)
 
-:warning: Calorie lists will not show anything if you have not added any calorie
+_:warning: Calorie lists will not show anything if you have not added any calorie
 inputs or outputs for that particular day you are viewing. The status bar will still 
-update. 
+update._ 
 
 _:bulb:TIP: Calorie lists can be viewed alternatively by double clicking on a particular day card._
 
@@ -549,12 +559,29 @@ My Fitness Buddy data are saved in the hard disk automatically after any command
 ## 5. FAQ
 (Contributed by Ethan)
 
-### 5.1 Transferring Data
+### 5.1 General
+
+**Q**: Why is the app not running?<br>
+**A**: Ensure JDK 11 or above is installed. 
+
+**Q**: I forgot how to use the app. Where can I find help?<br>
+**A**: Enter help into the command box and a link to the user guide will be provided.
+
+**Q**: Where is my data stored?<br>
+**A**: Your data is stored locally in your computer. It will be in the My Fitness Buddy JSON file
+that will be created when you first launch the app. 
+
+**Q**: Do I have to use a save command for my data to be safely backed up in my computer?<br>
+**A**: No, all your data is automatically backed up in your computer. There is no need to manually save 
+your data.
+
+### 5.2 Transferring Data
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous My Fitness Buddy home folder. 
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+ data of your previous My Fitness Buddy home folder. 
 
-### 5.2 Viewing calorie lists
+### 5.3 Viewing calorie lists
 
 **Q**: Why is my calorie lists not showing when I use a view command?<br>
 **A**: Make sure that you have added calories for that day. If the calorie lists are empty,
@@ -567,10 +594,11 @@ viewing that particular day.
 
 Action | Format
 --------|------------------
-**Create profile** | `create n/NAME id/ID_NUM h/HEIGHT w/TARGET_WEIGHT` 
-**Edit profile** | `profile edit n/NAME id/ID_NUM h/HEIGHT w/TARGET_WEIGHT`
+**Create profile** | `create n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT` 
+**Update profile** | `update n/NAME id/ID_NUM h/HEIGHT w/STARTING_WEIGHT`
+**Login into a profile** | `login INDEX`
 **Add day record** | `add d/DATE w/WEIGHT` 
-**Edit day record** | `edit INDEX w/WEIGHT`
+**Edit day record** | `edit INDEX w/WEIGHT d/DATE`
 **Delete day record** | `delete INDEX`
 **Add input** | `calorie tp/in t/TIME f/FOOD c/CALORIE_COUNT`
 **Add output** | `calorie tp/out t/TIME d/DURATION c/CALORIE_BURNT`

@@ -158,6 +158,10 @@ public class Day {
     public double getProgress() {
         double currentBmi = Bmi.calculateBmi(height, weight);
         double startBmi = Bmi.calculateBmi(height, startingWeight);
+        System.out.println(startBmi);
+        if (startBmi < 22.5) {
+            return 1;
+        }
         double endBmi = 22.5;
         double totalBmiToChange = startBmi - endBmi;
         double differenceWithEnd = currentBmi - endBmi;
@@ -170,6 +174,7 @@ public class Day {
         if (percentageChange < 0) {
             percentageChange = 0;
         }
+        System.out.println(percentageChange + "<-");
         return percentageChange;
     }
 

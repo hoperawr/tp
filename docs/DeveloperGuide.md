@@ -124,13 +124,22 @@ The `Calorie` class contains a `Time` and `CalorieCount` which `Input` and `Outp
 
 ### 2.5 Storage component
 
-![Structure of the Storage Component](images/StorageClassDiagramNew.png)
+![Structure of the Storage Component](images/StorageClassDiagram.png)
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2021S1-CS2103T-W11-3/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
-The `Storage` component,
-* can save `UserPref` objects in json format and read it back.
-* can save My Fitness Buddy data in json format and read it back.
+The `Storage` component,  
+* can save a MyFitnessBuddy object in JSON format   
+* can save a UserPref object in JSON format  
+* can parse a JSON file of MyFitnessBuddy data to construct a MyFitnessBuddy object  
+* can parse a JSON file of UserPref data to construct a UserPref object  
+
+JsonMyFitnessBuddyStorage is the implementation of MyFitnessBuddyStorage interface and supports the storage of all data in the application.  
+
+JsonAdaptedPerson, JsonAdaptedProfile, JsonAdaptedDay, JsonAdaptedCalorieManager, JsonAdaptedInput, 
+JsonAdaptedOutput are JSON adapted classes to convert the specified object into a JSON file and read a JSON file to create the object.
+
+
 
 ### 2.6 Common classes
 
@@ -141,6 +150,40 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 ## **3. Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Add Calorie feature
+
+#### Overview
+
+This feature allows users to add a calorie to the calorie manager of the day with the specified date.   
+If no date is specified, calorie command takes the system date and adds it to the day with the date.
+
+This is an activity diagram to demostrate what happens when the user uses the calorie command
+![AddCalorieActivity](images/AddCalorieActivity.png)
+
+#### Implementation
+Step 1: CalorieCommand.execute(model) is called by Logic Manager which gives a Model object as argument.  
+Step 2:  CalorieCommand will first check whether the Model object has a day with the date. If false, it throws an error.  
+Step 3: CalorieCommand will try to get the Day object. First, it calls model.getDay(date), which calls the MyFitnessBuddy object getDay(date) which calls the Person object getDay(date) which finally calls UniqueDayList object getDate(date) and returns a Day object.  
+Step 4: It will then assign the Day object to two Day objects, editDay and targetDay.  
+Step 5: CalorieCommand will then edit the Day by changing the Day object’s CalorieManager object. First, it calls editDay.getCalorieManager() to get the Day object’s CalorieManager object.  
+Step 6: Depending on whether the boolean isOut is true, it adds the appropriate calorie to the CalorieManager object. If isOut is true, it calls addCalorieOutput(calorie), else it calls addCalorieInput(calorie)  
+Step 7: After changing editDay, CalorieCommand will call model.setDay(editDay, targetDay) to replace the targetDay with the edited Day object which contains the new Calorie.  
+
+Sequence diagram when CalorieCommand is executed
+![AddCalorieSequenceDiagram](images/AddCalorieSequenceDiagram.png)
+
+#### Design Considerations
+Alternative 1:  
+Instead of having a single CalorieCommand class, have an OutputCommand and InputCommand class  
+Pros: Less confusing code  
+Cons: Duplicate code as the two commands have very similar functions  
+Alternative 2:  
+Directly editing the CalorieManager of the Day object instead of using setDay()  
+Pros: Less confusing code  
+Cons: More bugs will occur, not defensive coding  
+
+
 
 ### Remove Calorie feature
 

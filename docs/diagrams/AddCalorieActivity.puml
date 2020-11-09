@@ -1,0 +1,22 @@
+@startuml
+start
+:User adds a calorie;
+
+if () then ([User specifies date])
+    :Uses the date specified;
+else ([else])
+    :Uses system's date;
+endif
+: Searches for the date in UniqueDayList;
+if () then ([Day with date not found])
+    :Error;
+else ([else])
+    if () then ([User adds output])
+        :adds Output to CalorieManager;
+    else ([else])
+        :adds Input to CalorieManager;
+endif
+endif
+
+stop
+@enduml

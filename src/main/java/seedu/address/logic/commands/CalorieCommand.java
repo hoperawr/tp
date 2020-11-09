@@ -116,6 +116,7 @@ public class CalorieCommand extends Command {
         LocalDate date = getDate(this.date);
         if (model.hasDay(date)) {
             Day editDay = model.getDay(date);
+            Day targetDay = model.getDay(date);
             CalorieManager cm = editDay.getCalorieManager();
             if (editDay.getCalorieManager().contains(calorie, isOut)) {
                 throw new CommandException(DUPLICATE_TIME);
@@ -136,7 +137,7 @@ public class CalorieCommand extends Command {
             } else {
                 editDay.getCalorieManager().addCalorieOutput((Output) calorie);
             }
-            model.setDay(model.getDay(date), editDay);
+            model.setDay(targetDay, editDay);
             model.updateFilteredDayList(PREDICATE_SHOW_ALL_DAYS);
         } else {
             throw new CommandException(NO_AVAILABLE_DAY);

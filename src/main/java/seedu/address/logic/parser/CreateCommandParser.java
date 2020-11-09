@@ -44,9 +44,10 @@ public class CreateCommandParser implements Parser<CreateCommand> {
         Height height = ParserUtil.parseHeight(argMultimap.getValue(PREFIX_HEIGHT).get());
         Weight targetWeight = ParserUtil.parseWeight(argMultimap.getValue(PREFIX_WEIGHT).get());
         profile = new Profile(name, id, height, targetWeight);
-        //        Date start = new Date(LocalDate.now().toString()); set the created day to be 1999-06-06 for testing
-        //        profile.setStartingDay(start);
-        profile.setStartingDay(new Date(LocalDate.parse("1999-12-31").toString()));
+        Date start = new Date(LocalDate.now().toString());
+        profile.setStartingDay(start);
+        /*set the created day to be 1999-06-06 for testing*/
+        //profile.setStartingDay(new Date(LocalDate.parse("1999-12-31").toString()));
         return new CreateCommand(profile);
     }
 

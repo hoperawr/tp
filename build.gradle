@@ -70,7 +70,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = 'MyFitnessBuddy_v1.3.jar'
+    archiveName = 'MyFitnessBuddy_v1.4.jar'
 }
 
 defaultTasks 'clean', 'test'

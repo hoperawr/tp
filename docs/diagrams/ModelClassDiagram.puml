@@ -5,7 +5,7 @@ skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
 Package Model <<Rectangle>>{
-Interface ReadOnlyAddressBook <<Interface>>
+Interface ReadOnlyMyFitnessBuddy <<Interface>>
 Interface Model <<Interface>>
 Interface ObservableList <<Interface>>
 Class MyFitnessBuddy
@@ -14,6 +14,16 @@ Class Model
 Class ModelManager
 Class UserPrefs
 Class ReadOnlyUserPrefs
+
+Package Person {
+Class Person
+Class Profile
+Class ID
+Class Name
+Class Height
+Class UniquePersonList
+}
+
 
 Package Day {
 Class Day
@@ -33,23 +43,26 @@ Class Exercise
 Class Food
 }
 
-CalorieManager "*"-> Input
-CalorieManager "*"-> Output
-Calorie *--> Time
-Calorie *--> CalorieCount
+Person "1"-> Profile
+Profile --> Name
+Profile --> ID
+Profile --> Height
+Profile --> Weight
+
+CalorieManager "*"--> Input
+CalorieManager "*"--> Output
 Calorie <|-- Input
 Calorie <|-- Output
+Calorie *--> Time
+Calorie *-> CalorieCount
 
 Input *--> Food
 Output *--> Exercise
 
-Package Tag {
-Class Tag
-}
-}
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
+
 
 MyFitnessBuddy .up.|> ReadOnlyMyFitnessBuddy
 
@@ -59,13 +72,13 @@ ModelManager o--> "1" MyFitnessBuddy
 ModelManager o-left-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
-MyFitnessBuddy *--> "1" UniqueDayList
+MyFitnessBuddy *--> "1" UniquePersonList : filtered list
+
+Person *--> "1" UniqueDayList
+
 UniqueDayList o--> "*" Day
 Day *--> CalorieManager
-Day *--> "*" Tag
 Day *--> Date
 Day *--> Weight
 
-
-ModelManager -->"1" Day : filtered list
 @enduml

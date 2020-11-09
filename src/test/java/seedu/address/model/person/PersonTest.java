@@ -10,9 +10,12 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.day.Date;
 import seedu.address.model.day.Day;
+import seedu.address.model.day.Weight;
 import seedu.address.testutil.DayBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TypicalPerson;
 import seedu.address.testutil.TypicalProfiles;
 
 public class PersonTest {
@@ -86,4 +89,27 @@ public class PersonTest {
         assertFalse(personA.equals(5));
     }
 
+    @Test
+    void getCurrentBmi() {
+        Person personA = TypicalPerson.PERSON1;
+        assertEquals(15.39, personA.getCurrentBmi());
+        personA.addDay(new Day(new Date("2021-10-10"), new Weight("100")));
+        assertEquals(34.2, personA.getCurrentBmi());
+        Person personB = new Person(personA.getProfile());
+        assertEquals(20.86, personB.getCurrentBmi());
+    }
+
+    @Test
+    void getProgress() {
+        Person personA = new Person(new Profile(new Name("asd"),
+                new ID("1111"), new Height("180"), new Weight("120")));
+        assertEquals(0, personA.getProgress());
+        personA.addDay(new Day(new Date("2020-10-10"), new Weight("90")));
+        assertEquals(0.6368638239339751, personA.getProgress());
+        personA.addDay(new Day(new Date("2020-10-11"), new Weight("20")));
+        assertEquals(1, personA.getProgress());
+        personA.addDay(new Day(new Date("2020-10-12"), new Weight("160")));
+        assertEquals(0, personA.getProgress());
+
+    }
 }

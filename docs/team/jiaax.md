@@ -5,7 +5,8 @@ title: Ng Jia Xin's Project Portfolio Page
 
 ## Project: My Fitness Buddy
 
-My Fitness Buddy is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+My Fitness Buddy is a desktop application that helps PES B pending recruits keep track of their
+ overall change in fitness level by allowing them to add daily records of their weight and calorie input/output. 
 
 Given below are my contributions to the project.
 

@@ -1,149 +1,74 @@
 package seedu.address.logic.commands;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_1;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_2;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_2;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-//import static seedu.address.logic.commands.CommandTestUtil.showDayAtIndex;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_DUPLICATE_DAY;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_EDIT_DAY_SUCCESS;
+import static seedu.address.logic.commands.EditCommand.createEditedDay;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_DAY;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_DAY;
-import static seedu.address.testutil.TypicalPerson.getTypicalMyFitnessBuddy;
+import static seedu.address.testutil.TypicalPerson.getSimpleMyFitnessBuddy;
+import static seedu.address.testutil.TypicalPerson.getSimpleMyFitnessBuddy2;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.EditCommand.EditDayDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.MyFitnessBuddy;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.day.Date;
 import seedu.address.model.day.Day;
-import seedu.address.testutil.DayBuilder;
-import seedu.address.testutil.EditDayDescriptorBuilder;
+
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
 public class EditCommandTest {
-
-    private Model model = new ModelManager(getTypicalMyFitnessBuddy(), new UserPrefs());
-
-    //    @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Day editedDay = new DayBuilder().build();
-        EditCommand.EditDayDescriptor descriptor = new EditDayDescriptorBuilder(editedDay).build();
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_DAY, descriptor);
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_DAY_SUCCESS, editedDay);
-
-        Model expectedModel = new ModelManager(new MyFitnessBuddy(model.getMyFitnessBuddy()), new UserPrefs());
-        expectedModel.setDay(model.getFilteredDayList().get(0), editedDay);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-    /*
     @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() {
-        Index indexLastPerson = Index.fromOneBased(model.getFilteredDayList().size());
-        Day lastDay = model.getFilteredDayList().get(indexLastPerson.getZeroBased());
+    public void invalid_index() throws CommandException {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy(), new UserPrefs());
+        EditCommand.EditDayDescriptor editDayDescriptor = new EditCommand.EditDayDescriptor();
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(2), editDayDescriptor);
 
-        DayBuilder personInList = new DayBuilder(lastDay);
-        Day editedDay = personInList.withDate(VALID_DATE_2).withWeight(VALID_WEIGHT_2)
-                .withTags(VALID_TAG_HUSBAND).build();
-
-        EditCommand.EditDayDescriptor descriptor = new EditDayDescriptorBuilder().withDate(VALID_DATE_2)
-                .withWeight(VALID_WEIGHT_2).withTags(VALID_TAG_HUSBAND).build();
-        EditCommand editCommand = new EditCommand(indexLastPerson, descriptor);
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_DAY_SUCCESS, editedDay);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setDay(lastDay, editedDay);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_DAY_DISPLAYED_INDEX, () ->
+                editCommand.execute(model));
     }
-    */
-    //    @Test
-    public void execute_noFieldSpecifiedUnfilteredList_success() {
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_DAY, new EditCommand.EditDayDescriptor());
-        Day editedDay = model.getFilteredDayList().get(INDEX_FIRST_DAY.getZeroBased());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_DAY_SUCCESS, editedDay);
-
-        Model expectedModel = new ModelManager(new MyFitnessBuddy(model.getMyFitnessBuddy()), new UserPrefs());
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-    /*
-    @Test
-    public void execute_filteredList_success() {
-        showDayAtIndex(model, INDEX_FIRST_DAY);
-
-        Day dayInFilteredList = model.getFilteredDayList().get(INDEX_FIRST_DAY.getZeroBased());
-        Day editedDay = new DayBuilder(dayInFilteredList).withDate(VALID_DATE_2).build();
-        EditCommand editCommand = new EditCommand(INDEX_FIRST_DAY,
-                new EditDayDescriptorBuilder().withDate(VALID_DATE_2).build());
-
-        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_DAY_SUCCESS, editedDay);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.setDay(model.getFilteredDayList().get(0), editedDay);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-    */
-    //    @Test
-    public void execute_duplicatePersonUnfilteredList_failure() {
-        Day firstDay = model.getFilteredDayList().get(INDEX_FIRST_DAY.getZeroBased());
-        EditDayDescriptor descriptor = new EditDayDescriptorBuilder(firstDay).build();
-        EditCommand editCommand = new EditCommand(INDEX_SECOND_DAY, descriptor);
-
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_DAY);
-    }
-
-    //    @Test
-    //    public void execute_duplicatePersonFilteredList_failure() {
-    //        showDayAtIndex(model, INDEX_FIRST_DAY);
-    //
-    //        // edit day in filtered list into a duplicate in address book
-    //        Day dayInList = model.getMyFitnessBuddy().getPerson().getDayList().get(INDEX_SECOND_DAY.getZeroBased());
-    //        EditCommand editCommand = new EditCommand(INDEX_FIRST_DAY,
-    //                new EditDayDescriptorBuilder(dayInList).build());
-    //
-    //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_DAY);
-    //    }
 
     @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredDayList().size() + 1);
-        EditDayDescriptor descriptor = new EditDayDescriptorBuilder().withDate(VALID_DATE_2).build();
-        EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
+    public void duplicate_day() throws CommandException {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy2(), new UserPrefs());
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        EditCommand.EditDayDescriptor editDayDescriptor = new EditCommand.EditDayDescriptor();
+        editDayDescriptor.setDate(new Date("2020-10-11"));
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), editDayDescriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_DAY_DISPLAYED_INDEX);
+        assertThrows(CommandException.class, MESSAGE_DUPLICATE_DAY, () ->
+                editCommand.execute(model));
     }
 
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    //    @Test
-    //    public void execute_invalidPersonIndexFilteredList_failure() {
-    //        showDayAtIndex(model, INDEX_FIRST_DAY);
-    //        Index outOfBoundIndex = INDEX_SECOND_DAY;
-    //        // ensures that outOfBoundIndex is still in bounds of address book list
-    //        assertTrue(outOfBoundIndex.getZeroBased() < model.getMyFitnessBuddy().getPerson().getDayList().size());
-    //
-    //        EditCommand editCommand = new EditCommand(outOfBoundIndex,
-    //                new EditDayDescriptorBuilder().withDate(VALID_DATE_2).build());
-    //
-    //        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_DAY_DISPLAYED_INDEX);
-    //    }
+    @Test
+    public void execute_successful() throws CommandException {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy2(), new UserPrefs());
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        EditCommand.EditDayDescriptor editDayDescriptor = new EditCommand.EditDayDescriptor();
+        editDayDescriptor.setDate(new Date("2020-12-11"));
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        EditCommand editCommand = new EditCommand(Index.fromOneBased(1), editDayDescriptor);
+        Day editedDay = createEditedDay(model.getFilteredDayList().get(0), editDayDescriptor);
+        CommandResult commandResult = editCommand.execute(model);
+        assertEquals(String.format(MESSAGE_EDIT_DAY_SUCCESS, editedDay), commandResult.getFeedbackToUser());;
+    }
 
-    //    @Test
+    @Test
     public void equals() {
         final EditCommand standardCommand = new EditCommand(INDEX_FIRST_DAY, DESC_1);
 

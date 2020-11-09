@@ -369,6 +369,14 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Updates the profile panels whenever a command is executed to refresh BMI progress bar.
+     */
+    public void handleUpdateProfilePanel() {
+        updateProfilePanels();
+    }
+
+
+    /**
      * Removes the items shown in the calorie lists if the day being shown is deleted.
      *
      * @param index index of the item that is deleted.
@@ -463,6 +471,8 @@ public class MainWindow extends UiPart<Stage> {
             if (commandResult.isShowCommanderStats()) {
                 handleCommanderStats();
             }
+
+            handleUpdateProfilePanel();
 
             return commandResult;
         } catch (CommandException | ParseException e) {

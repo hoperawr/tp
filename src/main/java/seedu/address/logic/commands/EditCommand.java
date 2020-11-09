@@ -78,7 +78,7 @@ public class EditCommand extends Command {
      * Creates and returns a {@code Day} with the details of {@code dayToEdit}
      * edited with {@code editDayDescriptor}.
      */
-    private static Day createEditedDay(Day dayToEdit, EditDayDescriptor editDayDescriptor) {
+    public static Day createEditedDay(Day dayToEdit, EditDayDescriptor editDayDescriptor) {
         assert dayToEdit != null;
 
         Date updatedDate = editDayDescriptor.getDate().orElse(dayToEdit.getDate());

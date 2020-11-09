@@ -65,9 +65,6 @@ public class CreateCommand extends Command {
         if (model.hasPerson(newPerson)) {
             throw new CommandException(MESSAGE_ERROR);
         }
-        if (!isUnique(profile.id, model.getMyFitnessBuddy().getPersons())) {
-            throw new CommandException(MESSAGE_SAME_ID);
-        }
         model.addPerson(newPerson);
         model.updateDay();
         logger.info("---------------[USER COMMAND][Profile" + profile.toString() + " created]");

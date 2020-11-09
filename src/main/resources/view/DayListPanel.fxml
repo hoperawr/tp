@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
   <Label text="Days" styleClass="title_panel"/>
   <ListView fx:id="dayListView" VBox.vgrow="ALWAYS" />
 </VBox>

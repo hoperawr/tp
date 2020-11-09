@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPerson.getSimpleMyFitnessBuddy;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -18,10 +18,14 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.MyFitnessBuddy;
 import seedu.address.model.ReadOnlyMyFitnessBuddy;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.day.Date;
 import seedu.address.model.day.Day;
+import seedu.address.model.day.Weight;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Profile;
 import seedu.address.testutil.DayBuilder;
@@ -33,27 +37,73 @@ public class AddCommandTest {
         assertThrows(NullPointerException.class, () -> new AddCommand(null));
     }
 
-    //    @Test
-    public void execute_dayAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingDayAdded modelStub = new ModelStubAcceptingDayAdded();
-        Day validDay = new DayBuilder().build();
+    @Test
+    public void isBefore() {
+        Date toAdd = new Date("2020-10-10");
+        Date baseLine = new Date("2020-09-09");
+        Date toAdd2 = new Date("2020-08-08");
 
-        CommandResult commandResult = new AddCommand(validDay).execute(modelStub);
-
-        assertThrows(CommandException.class, () -> new AddCommand(validDay).execute(modelStub));
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validDay), commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validDay), modelStub.daysAdded);
+        AddCommand addCommand = new AddCommand(new Day(toAdd, new Weight("100")));
+        assertFalse(addCommand.isBefore(toAdd, baseLine));
+        assertTrue(addCommand.isBefore(toAdd2, baseLine));
     }
 
-    //    @Test
-    public void execute_duplicateDay_throwsCommandException() throws Exception {
-        Day validDay = new DayBuilder().build();
-        MyFitnessBuddy p = new MyFitnessBuddy();
-        AddCommand addCommand = new AddCommand(validDay);
-        ModelStub modelStub = new ModelStubWithDay(validDay);
+    @Test
+    public void isAfter() {
+        Date toAdd = new Date("2021-10-10");
+        Date toAdd2 = new Date("1990-08-08");
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_DAY, () -> addCommand.execute(modelStub));
+        AddCommand addCommand = new AddCommand(new Day(toAdd, new Weight("100")));
+        assertTrue(addCommand.isAfter(toAdd));
+        assertFalse(addCommand.isAfter(toAdd2));
     }
+
+    @Test
+    public void execute_duplicateDay_throwsCommandException() {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy(), new UserPrefs());
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        Date toAdd = new Date("2020-10-10");
+        AddCommand addCommand = new AddCommand(new Day(toAdd, new Weight("100")));
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_DAY, () -> addCommand.execute(model));
+    }
+
+    @Test
+    public void execute_noActiveProfile_throwsCommandException() {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy(), new UserPrefs());
+        Date toAdd = new Date("2020-10-10");
+        AddCommand addCommand = new AddCommand(new Day(toAdd, new Weight("100")));
+        assertThrows(CommandException.class, AddCommand.MESSAGE_NO_LOGIN, () -> addCommand.execute(model));
+    }
+
+    @Test
+    public void execute_travelToThePast_throwsCommandException() {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy(), new UserPrefs());
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        Date toAdd = new Date("1990-10-10");
+        AddCommand addCommand = new AddCommand(new Day(toAdd, new Weight("100")));
+        assertThrows(CommandException.class, AddCommand.MESSAGE_PAST, () -> addCommand.execute(model));
+    }
+
+    @Test
+    public void execute_travelToTheFuture_throwsCommandException() {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy(), new UserPrefs());
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        Date toAdd = new Date("2021-10-10");
+        AddCommand addCommand = new AddCommand(new Day(toAdd, new Weight("100")));
+        assertThrows(CommandException.class, AddCommand.MESSAGE_FUTURE, () -> addCommand.execute(model));
+    }
+
+    @Test
+    public void execute_successful() throws CommandException {
+        Model model = new ModelManager(getSimpleMyFitnessBuddy(), new UserPrefs());
+        model.setCurrentPerson(model.getMyFitnessBuddy().getPersonList().get(0));
+        Date toAdd = new Date("2020-11-09");
+        Day addDay = new Day(toAdd, new Weight("100"));
+        AddCommand addCommand = new AddCommand(addDay);
+        CommandResult commandResult = addCommand.execute(model);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, addDay), commandResult.getFeedbackToUser());;
+    }
+
 
     @Test
     public void equals() {

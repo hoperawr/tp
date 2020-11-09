@@ -6,7 +6,14 @@ import java.util.List;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.MyFitnessBuddy;
+import seedu.address.model.day.Date;
+import seedu.address.model.day.Day;
+import seedu.address.model.day.Weight;
+import seedu.address.model.person.Height;
+import seedu.address.model.person.ID;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Profile;
 
 public class TypicalPerson {
 
@@ -98,6 +105,38 @@ public class TypicalPerson {
                         e.printStackTrace();
                     }
                 }));
+        return myFitnessBuddy;
+    }
+    public static MyFitnessBuddy getSimpleMyFitnessBuddy() {
+        MyFitnessBuddy myFitnessBuddy = new MyFitnessBuddy();
+        Person person = new Person(
+                new Profile(new Name("test"), new ID("1111"), new Height("180"), new Weight("100")));
+        person.setStartingDay(new Date("2020-10-10"));
+        Day day = new Day(new Date("2020-10-10"), new Weight("100"));
+        day.setStartingWeight(person.getProfile().getStartingWeight());
+        day.setAge(person.getProfile().getAge());
+        day.setHeight(person.getProfile().getHeight());
+        person.addDay(day);
+        myFitnessBuddy.addPerson(person);
+        return myFitnessBuddy;
+    }
+
+    public static MyFitnessBuddy getSimpleMyFitnessBuddy2() {
+        MyFitnessBuddy myFitnessBuddy = new MyFitnessBuddy();
+        Person person = new Person(
+                new Profile(new Name("test"), new ID("1111"), new Height("180"), new Weight("100")));
+        person.setStartingDay(new Date("2020-10-10"));
+        Day day = new Day(new Date("2020-10-10"), new Weight("100"));
+        day.setStartingWeight(person.getProfile().getStartingWeight());
+        day.setAge(person.getProfile().getAge());
+        day.setHeight(person.getProfile().getHeight());
+        person.addDay(day);
+        Day day2 = new Day(new Date("2020-10-11"), new Weight("123"));
+        day2.setStartingWeight(person.getProfile().getStartingWeight());
+        day2.setAge(person.getProfile().getAge());
+        day2.setHeight(person.getProfile().getHeight());
+        person.addDay(day2);
+        myFitnessBuddy.addPerson(person);
         return myFitnessBuddy;
     }
 }

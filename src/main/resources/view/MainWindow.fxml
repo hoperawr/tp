@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.stage.Stage?>
 
-<fx:root maxHeight="750" maxWidth="1024.0" minHeight="750" minWidth="1024.0" onCloseRequest="#handleExit" resizable="false" title="My Fitness Buddy" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="750" maxWidth="1024.0" minHeight="750" minWidth="1024.0" onCloseRequest="#handleExit" resizable="false" title="My Fitness Buddy" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
   <icons>
     <Image url="@/images/MyFitnessBuddy_icon.png" />
   </icons>
